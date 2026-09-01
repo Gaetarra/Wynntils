@@ -23,7 +23,7 @@ public final class PartStyle {
     private static final String STYLE_PREFIX = "§";
     private static final Int2ObjectMap<ChatFormatting> INTEGER_TO_CHATFORMATTING_MAP = Arrays.stream(
                     ChatFormatting.values())
-            .filter(ChatFormatting::isColor)
+            .filter(cf -> TextColor.fromLegacyFormat(cf) != null)
             .collect(
                     () -> new Int2ObjectOpenHashMap<>(ChatFormatting.values().length),
                     (map, cf) -> {

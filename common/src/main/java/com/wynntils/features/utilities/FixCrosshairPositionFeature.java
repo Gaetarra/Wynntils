@@ -32,7 +32,7 @@ public class FixCrosshairPositionFeature extends Feature {
     private static boolean shouldOverrideCrosshair() {
         Minecraft mc = McUtils.mc();
         if (!mc.options.getCameraType().isFirstPerson()) return false;
-        return !mc.gui.getDebugOverlay().showDebugScreen() // Let vanilla handle the debug crosshair
+        return !mc.getDebugOverlay().showDebugScreen() // Let vanilla handle the debug crosshair
                 || mc.player.isReducedDebugInfo()
                 || mc.options.reducedDebugInfo().get();
     }
