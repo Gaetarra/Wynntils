@@ -5,7 +5,7 @@
 package com.wynntils.mc.event;
 
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.Event;
 import net.neoforged.bus.api.ICancellableEvent;
@@ -14,10 +14,10 @@ import net.neoforged.bus.api.ICancellableEvent;
 public class ContainerClickEvent extends Event implements ICancellableEvent {
     private final AbstractContainerMenu containerMenu;
     private final int slotNum;
-    private final ClickType clickType;
+    private final ContainerInput clickType;
     private final int mouseButton;
 
-    public ContainerClickEvent(AbstractContainerMenu containerMenu, int slotNum, ClickType clickType, int mouseButton) {
+    public ContainerClickEvent(AbstractContainerMenu containerMenu, int slotNum, ContainerInput clickType, int mouseButton) {
         this.containerMenu = containerMenu;
         this.slotNum = slotNum;
         this.clickType = clickType;
@@ -32,7 +32,7 @@ public class ContainerClickEvent extends Event implements ICancellableEvent {
         return slotNum;
     }
 
-    public ClickType getClickType() {
+    public ContainerInput getClickType() {
         return clickType;
     }
 

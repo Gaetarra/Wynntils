@@ -6,8 +6,8 @@ package com.wynntils.mc.mixin;
 
 import com.wynntils.mc.extension.GuiMessageExtension;
 import java.time.LocalDateTime;
-import net.minecraft.client.GuiMessage;
-import net.minecraft.client.GuiMessageTag;
+import net.minecraft.client.multiplayer.chat.GuiMessage;
+import net.minecraft.client.multiplayer.chat.GuiMessageTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MessageSignature;
 import org.spongepowered.asm.mixin.Mixin;
