@@ -5,6 +5,7 @@
 package com.wynntils.utils;
 
 import com.mojang.blaze3d.buffers.GpuBuffer;
+import com.mojang.blaze3d.buffers.GpuBufferSlice;
 import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.systems.CommandEncoder;
 import com.mojang.blaze3d.systems.GpuDevice;
@@ -66,7 +67,7 @@ public final class SystemUtils {
                         gpuBuffer,
                         0,
                         () -> {
-                            try (GpuBuffer.MappedView mappedView = commandEncoder.mapBuffer(gpuBuffer, true, false)) {
+                            try (GpuBufferSlice.MappedView mappedView = gpuBuffer.map(true, false)) {
                                 NativeImage nativeImage =
                                         new NativeImage(NativeImage.Format.RGBA, textureWidth, textureHeight, false);
 

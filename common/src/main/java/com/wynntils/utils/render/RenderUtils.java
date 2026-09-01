@@ -1259,13 +1259,8 @@ public final class RenderUtils {
         guiGraphics.pose().translate(x, y);
         guiGraphics.pose().scale(scaleX, scaleY);
 
-        guiGraphics.guiRenderState.submitItem(new GuiItemRenderState(
-                itemStack.getItem().getName().toString(),
-                new Matrix3x2f(guiGraphics.pose()),
-                renderState,
-                0,
-                0,
-                guiGraphics.scissorStack.peek()));
+        guiGraphics.guiRenderState.addItem(new GuiItemRenderState(
+                new Matrix3x2f(guiGraphics.pose()), renderState, 0, 0, guiGraphics.scissorStack.peek()));
 
         guiGraphics.pose().popMatrix();
     }
@@ -1332,7 +1327,6 @@ public final class RenderUtils {
                 nametag,
                 !entityRenderState.isDiscrete,
                 entityRenderState.lightCoords,
-                entityRenderState.distanceToCameraSq,
                 cameraRenderState);
     }
 

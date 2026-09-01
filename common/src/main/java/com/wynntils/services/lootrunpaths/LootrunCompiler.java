@@ -102,9 +102,10 @@ public final class LootrunCompiler {
                 builderY.addPoint(distance, (float) position.y, slopeY);
                 builderZ.addPoint(distance, (float) position.z, slopeZ);
             }
-            CubicSpline<BoundedFloatFunction<Float>> splineX = builderX.build();
-            CubicSpline<BoundedFloatFunction<Float>> splineY = builderY.build();
-            CubicSpline<BoundedFloatFunction<Float>> splineZ = builderZ.build();
+            // 26.2: CubicSpline is no longer sampleable directly; asSampler wraps it.
+            BoundedFloatFunction<Float> splineX = CubicSpline.asSampler(builderX.build());
+            BoundedFloatFunction<Float> splineY = CubicSpline.asSampler(builderY.build());
+            BoundedFloatFunction<Float> splineZ = CubicSpline.asSampler(builderZ.build());
 
             LootrunPath newResult = new LootrunPath(new ArrayList<>());
             for (float i = 0f; i < distance; i += (1f / sampleRate)) {

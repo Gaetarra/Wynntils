@@ -64,6 +64,7 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import org.joml.Vector2i;
+import org.joml.Vector4f;
 
 @ConfigCategory(Category.INVENTORY)
 public class ItemScreenshotFeature extends Feature {
@@ -156,10 +157,11 @@ public class ItemScreenshotFeature extends Feature {
      */
     private static CompletableFuture<NativeImage> screenshotTooltip(
             Screen screen, List<ClientTooltipComponent> tooltip, Identifier tooltipStyle, int width, int height) {
-        TextureTarget framebuffer = new TextureTarget("Wynntils Item Screenshot", width * 2, height * 2, true);
+        TextureTarget framebuffer = new TextureTarget("Wynntils Item Screenshot", width * 2, height * 2, true, GpuFormat.RGBA8_UNORM);
         RenderSystem.getDevice()
                 .createCommandEncoder()
-                .clearColorAndDepthTextures(framebuffer.getColorTexture(), 0, framebuffer.getDepthTexture(), 1.0);
+                .clearColorAndDepthTextures(
+                        framebuffer.getColorTexture(), new Vector4f(0f, 0f, 0f, 0f), framebuffer.getDepthTexture(), 1.0);
 
         ((MinecraftExtension) McUtils.mc()).setOverridenRenderTarget(framebuffer);
         RenderSystem.outputColorTextureOverride = framebuffer.getColorTextureView();
@@ -170,7 +172,7 @@ public class ItemScreenshotFeature extends Feature {
         GuiRenderState guiRenderState = new GuiRenderState();
 
         GuiRenderer guiRenderer =
-                new GuiRenderer(guiRenderState, mc.gameRenderer.getFeatureRenderDispatcher(), List.of());
+                new GuiRenderer(guiRenderState, mc.gameRenderer.featureRenderDispatcher(), List.of());
 
         GuiGraphicsExtractor guiGraphics = new GuiGraphicsExtractor(mc, guiRenderState, 0, 0);
 
@@ -183,7 +185,7 @@ public class ItemScreenshotFeature extends Feature {
         guiGraphics.tooltip(mc.font, tooltip, 0, 0, NO_POSITIONER, tooltipStyle);
         guiGraphics.pose().popMatrix();
 
-        guiRenderer.render(mc.gameRenderer.fogRenderer.getBuffer(FogRenderer.FogMode.NONE));
+        guiRenderer.render();
         guiRenderer.close();
 
         RenderSystem.outputColorTextureOverride = null;

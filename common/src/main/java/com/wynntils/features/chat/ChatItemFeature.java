@@ -58,6 +58,7 @@ import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import org.lwjgl.glfw.GLFW;
@@ -286,7 +287,8 @@ public class ChatItemFeature extends Feature {
         }
 
         ItemStack itemStack = buildChatHoverItemStack(wynnItem);
-        style = style.withHoverEvent(new HoverEvent.ShowItem(itemStack));
+        style = style.withHoverEvent(new HoverEvent.ShowItem(new ItemStackTemplate(
+                itemStack.typeHolder(), itemStack.getCount(), itemStack.getComponentsPatch())));
 
         // Add the item name
         StyledText appendedNameText =
