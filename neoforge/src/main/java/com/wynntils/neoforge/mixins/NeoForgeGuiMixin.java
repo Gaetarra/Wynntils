@@ -9,7 +9,7 @@ import com.wynntils.mc.event.RenderEvent;
 import com.wynntils.utils.type.RenderElementType;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.Hud;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,14 +18,14 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(Gui.class)
+@Mixin(Hud.class)
 public abstract class NeoForgeGuiMixin {
     @Shadow
     @Final
     protected Minecraft minecraft;
 
     @Inject(
-            method = "renderHotbar(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/client/DeltaTracker;)V",
+            method = "extractItemHotbar(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/client/DeltaTracker;)V",
             at = @At("HEAD"))
     private void onRenderHotbarPre(GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker, CallbackInfo ci) {
         MixinHelper.post(
@@ -33,7 +33,7 @@ public abstract class NeoForgeGuiMixin {
     }
 
     @Inject(
-            method = "renderSelectedItemName(Lnet/minecraft/client/gui/GuiGraphicsExtractor;I)V",
+            method = "extractSelectedItemName(Lnet/minecraft/client/gui/GuiGraphicsExtractor;I)V",
             at = @At("HEAD"),
             cancellable = true)
     private void onRenderSelectedItemNamePre(GuiGraphicsExtractor guiGraphics, int yShift, CallbackInfo ci) {

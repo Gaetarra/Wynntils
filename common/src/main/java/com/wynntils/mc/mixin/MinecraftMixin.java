@@ -71,7 +71,7 @@ public abstract class MinecraftMixin implements MinecraftExtension {
         MixinHelper.post(new TickEvent());
     }
 
-    @Inject(method = "resizeDisplay()V", at = @At("RETURN"))
+    @Inject(method = "resizeGui()V", at = @At("RETURN"))
     private void resizeDisplayPost(CallbackInfo ci) {
         MixinHelper.postAlways(new DisplayResizeEvent());
     }
@@ -124,17 +124,14 @@ public abstract class MinecraftMixin implements MinecraftExtension {
         return !event.isCanceled();
     }
 
-    @WrapMethod(method = "getMainRenderTarget()Lcom/mojang/blaze3d/pipeline/RenderTarget;")
-    private RenderTarget getMainRenderTarget(Operation<RenderTarget> operation) {
-        if (this.wynntils_overridenRenderTarget != null) {
-            return this.wynntils_overridenRenderTarget;
-        }
-
-        return operation.call();
-    }
-
+    // 26.2 moved the main render target to GameRenderer; GameRendererMixin reads the override from here.
     @Override
     public void setOverridenRenderTarget(RenderTarget renderTarget) {
         this.wynntils_overridenRenderTarget = renderTarget;
+    }
+
+    @Override
+    public RenderTarget getOverridenRenderTarget() {
+        return this.wynntils_overridenRenderTarget;
     }
 }

@@ -31,7 +31,7 @@ public abstract class FabricAbstractContainerScreenMixin {
     // Note: Call site 2 of 3 of ItemTooltipRenderEvent. Check the event class for more info.
     //       See NeoForgeGuiGraphicsMixin#renderTooltipPre for the Forge mixin.
     @WrapOperation(
-            method = "renderTooltip(Lnet/minecraft/client/gui/GuiGraphicsExtractor;II)V",
+            method = "extractTooltip(Lnet/minecraft/client/gui/GuiGraphicsExtractor;II)V",
             at =
                     @At(
                             value = "INVOKE",
@@ -69,7 +69,7 @@ public abstract class FabricAbstractContainerScreenMixin {
                     @At(
                             value = "INVOKE",
                             target =
-                                    "Lnet/minecraft/client/gui/GuiGraphicsExtractor;renderItemDecorations(Lnet/minecraft/client/gui/Font;Lnet/minecraft/world/item/ItemStack;IILjava/lang/String;)V"))
+                                    "Lnet/minecraft/client/gui/GuiGraphicsExtractor;itemDecorations(Lnet/minecraft/client/gui/Font;Lnet/minecraft/world/item/ItemStack;IILjava/lang/String;)V"))
     private void renderSlotPreCount(GuiGraphicsExtractor guiGraphics, Slot slot, int mouseX, int mouseY, CallbackInfo info) {
         MixinHelper.post(new SlotRenderEvent.CountPre(guiGraphics, (Screen) (Object) this, slot));
     }
