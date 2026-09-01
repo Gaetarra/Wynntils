@@ -5,13 +5,12 @@
 package com.wynntils.utils;
 
 import com.mojang.blaze3d.buffers.GpuBuffer;
-import com.mojang.blaze3d.opengl.GlDevice;
 import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.systems.CommandEncoder;
 import com.mojang.blaze3d.systems.GpuDevice;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.textures.GpuTexture;
-import com.mojang.blaze3d.textures.TextureFormat;
+import com.mojang.blaze3d.GpuFormat;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.datatransfer.DataFlavor;
@@ -34,9 +33,9 @@ public final class SystemUtils {
     }
 
     public static boolean usingOpenGL() {
-        GpuDevice gpuDevice = RenderSystem.getDevice();
-
-        return gpuDevice instanceof GlDevice;
+        // 26.2 added a Vulkan backend and made GlDevice package-private, so the backend
+        // description string is the only public way to tell the two apart.
+        return RenderSystem.getBackendDescription().toLowerCase(Locale.ROOT).contains("opengl");
     }
 
     public static void copyImageToClipboard(BufferedImage bi) {
@@ -50,7 +49,7 @@ public final class SystemUtils {
         int textureWidth = texture.getWidth(0);
         int textureHeight = texture.getHeight(0);
 
-        if (texture.getFormat() != TextureFormat.RGBA8) {
+        if (texture.getFormat() != GpuFormat.RGBA8_UNORM) {
             throw new IllegalStateException("Tried to copy non-compatible texture into image");
         }
 

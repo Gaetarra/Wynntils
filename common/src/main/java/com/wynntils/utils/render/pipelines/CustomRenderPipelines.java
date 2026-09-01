@@ -6,7 +6,8 @@ package com.wynntils.utils.render.pipelines;
 
 import com.mojang.blaze3d.pipeline.BlendFunction;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
-import com.mojang.blaze3d.platform.DepthTestFunction;
+import com.mojang.blaze3d.pipeline.DepthStencilState;
+import com.mojang.blaze3d.platform.CompareOp;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -29,7 +30,7 @@ public class CustomRenderPipelines extends RenderPipelines {
                     .withSampler("Sampler0")
                     .withBlend(BlendFunction.TRANSLUCENT)
                     .withVertexFormat(DefaultVertexFormat.POSITION_TEX_COLOR, VertexFormat.Mode.QUADS)
-                    .withDepthTestFunction(DepthTestFunction.LEQUAL_DEPTH_TEST)
+                    .withDepthStencilState(new DepthStencilState(CompareOp.LESS_THAN_OR_EQUAL, true))
                     .withCull(false)
                     .build());
 
@@ -47,8 +48,7 @@ public class CustomRenderPipelines extends RenderPipelines {
                     .withSampler("Sampler0")
                     .withBlend(BlendFunction.TRANSLUCENT)
                     .withVertexFormat(DefaultVertexFormat.POSITION_TEX_COLOR, VertexFormat.Mode.QUADS)
-                    .withDepthTestFunction(DepthTestFunction.NO_DEPTH_TEST)
-                    .withDepthWrite(false)
+                    .withDepthStencilState(new DepthStencilState(CompareOp.ALWAYS_PASS, false))
                     .withCull(false)
                     .build());
 }

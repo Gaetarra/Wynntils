@@ -10,7 +10,7 @@ import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.systems.GpuDevice;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.textures.GpuTexture;
-import com.mojang.blaze3d.textures.TextureFormat;
+import com.mojang.blaze3d.GpuFormat;
 import com.wynntils.core.WynntilsMod;
 import com.wynntils.core.components.Models;
 import com.wynntils.core.consumers.features.Feature;
@@ -51,7 +51,6 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipPositioner;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.fog.FogRenderer;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.component.DataComponents;
@@ -168,15 +167,10 @@ public class ItemScreenshotFeature extends Feature {
 
         Minecraft mc = McUtils.mc();
 
-        MultiBufferSource.BufferSource bufferSource = mc.renderBuffers().bufferSource();
         GuiRenderState guiRenderState = new GuiRenderState();
 
-        GuiRenderer guiRenderer = new GuiRenderer(
-                guiRenderState,
-                bufferSource,
-                mc.gameRenderer.getSubmitNodeStorage(),
-                mc.gameRenderer.getFeatureRenderDispatcher(),
-                List.of());
+        GuiRenderer guiRenderer =
+                new GuiRenderer(guiRenderState, mc.gameRenderer.getFeatureRenderDispatcher(), List.of());
 
         GuiGraphicsExtractor guiGraphics = new GuiGraphicsExtractor(mc, guiRenderState, 0, 0);
 
@@ -188,8 +182,6 @@ public class ItemScreenshotFeature extends Feature {
         guiGraphics.pose().scale(scalew, scaleh);
         guiGraphics.renderTooltip(mc.font, tooltip, 0, 0, NO_POSITIONER, tooltipStyle);
         guiGraphics.pose().popMatrix();
-
-        bufferSource.endBatch();
 
         guiRenderer.render(mc.gameRenderer.fogRenderer.getBuffer(FogRenderer.FogMode.NONE));
         guiRenderer.close();
@@ -275,7 +267,7 @@ public class ItemScreenshotFeature extends Feature {
                         | GpuTexture.USAGE_COPY_SRC
                         | GpuTexture.USAGE_TEXTURE_BINDING
                         | GpuTexture.USAGE_RENDER_ATTACHMENT,
-                TextureFormat.RGBA8,
+                GpuFormat.RGBA8_UNORM,
                 framebuffer.width,
                 framebuffer.height,
                 1,
