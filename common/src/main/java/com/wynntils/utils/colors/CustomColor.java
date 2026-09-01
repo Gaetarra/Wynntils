@@ -79,6 +79,10 @@ public record CustomColor(int r, int g, int b, int a) {
         return fromInt(TextColor.fromLegacyFormat(cf).getValue() | 0xFF000000);
     }
 
+    public static CustomColor fromTextColor(TextColor tc) {
+        return fromInt(tc.getValue() | 0xFF000000);
+    }
+
     /**
      * This method takes a color in the format 0x(AA)RRGGBB.
      * If the alpha is not set, it will be set to 255.
