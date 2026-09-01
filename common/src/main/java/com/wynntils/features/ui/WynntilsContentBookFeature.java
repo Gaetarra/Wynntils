@@ -48,12 +48,12 @@ public class WynntilsContentBookFeature extends Feature {
             () -> WynntilsMenuScreenBase.openBook(WynntilsMenuScreen.create()));
 
     @RegisterKeyBind
-    private final KeyBind openOverlayMenu =
-            KeyBindDefinition.OPEN_OVERLAY_MENU.create(() -> McUtils.mc().setScreen(OverlaySelectionScreen.create()));
+    private final KeyBind openOverlayMenu = KeyBindDefinition.OPEN_OVERLAY_MENU.create(
+            () -> McUtils.mc().setScreenAndShow(OverlaySelectionScreen.create()));
 
     @RegisterKeyBind
     private final KeyBind openOverlayFreeMove = KeyBindDefinition.OPEN_OVERLAY_FREE_MOVE.create(
-            () -> McUtils.mc().setScreen(OverlayManagementScreen.create(null)));
+            () -> McUtils.mc().setScreenAndShow(OverlayManagementScreen.create(null)));
 
     @RegisterKeyBind
     private final KeyBind openGuidesList = KeyBindDefinition.OPEN_GUIDES_LIST.create(

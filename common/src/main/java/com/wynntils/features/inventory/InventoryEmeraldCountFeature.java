@@ -32,7 +32,7 @@ import com.wynntils.utils.render.type.HorizontalAlignment;
 import com.wynntils.utils.render.type.TextShadow;
 import com.wynntils.utils.render.type.VerticalAlignment;
 import java.util.Arrays;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -158,7 +158,7 @@ public class InventoryEmeraldCountFeature extends Feature {
         }
     }
 
-    private void renderTextCount(GuiGraphics guiGraphics, int x, int y, int emeralds) {
+    private void renderTextCount(GuiGraphicsExtractor guiGraphics, int x, int y, int emeralds) {
         final HorizontalAlignment emeraldTextAlignment =
                 textDisplaySide.get() == TextDisplaySide.LEFT ? HorizontalAlignment.LEFT : HorizontalAlignment.RIGHT;
         final int emeraldTextOffsetX = textDisplaySide.get() == TextDisplaySide.LEFT ? 1 : -1;
@@ -183,7 +183,7 @@ public class InventoryEmeraldCountFeature extends Feature {
                         TextShadow.NORMAL);
     }
 
-    private void renderTexturedCount(GuiGraphics guiGraphics, int x, int y, int emeralds) {
+    private void renderTexturedCount(GuiGraphicsExtractor guiGraphics, int x, int y, int emeralds) {
         String[] emeraldAmounts = getRenderableEmeraldAmounts(emeralds);
 
         guiGraphics.pose().pushMatrix();
@@ -201,15 +201,15 @@ public class InventoryEmeraldCountFeature extends Feature {
             RenderUtils.drawScalingTexturedRect(
                     guiGraphics, Texture.EMERALD_COUNT_BACKGROUND, renderX, renderY, TEXTURE_SIZE, TEXTURE_SIZE);
 
-            guiGraphics.renderItem(EmeraldUnits.values()[i].getItemStack(), renderX + 6, renderY + 6);
+            guiGraphics.item(EmeraldUnits.values()[i].getItemStack(), renderX + 6, renderY + 6);
 
             if (EmeraldUnits.values()[i].getSymbol().equals("stx")) { // Make stx not look like normal LE
-                guiGraphics.renderItem(EmeraldUnits.values()[i].getItemStack(), renderX + 3, renderY + 4);
-                guiGraphics.renderItem(EmeraldUnits.values()[i].getItemStack(), renderX + 6, renderY + 6);
-                guiGraphics.renderItem(EmeraldUnits.values()[i].getItemStack(), renderX + 9, renderY + 8);
+                guiGraphics.item(EmeraldUnits.values()[i].getItemStack(), renderX + 3, renderY + 4);
+                guiGraphics.item(EmeraldUnits.values()[i].getItemStack(), renderX + 6, renderY + 6);
+                guiGraphics.item(EmeraldUnits.values()[i].getItemStack(), renderX + 9, renderY + 8);
             } else {
                 // This needs to be separate since Z levels are determined by order here
-                guiGraphics.renderItem(EmeraldUnits.values()[i].getItemStack(), renderX + 6, renderY + 6);
+                guiGraphics.item(EmeraldUnits.values()[i].getItemStack(), renderX + 6, renderY + 6);
             }
 
             FontRenderer.getInstance()

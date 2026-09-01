@@ -85,11 +85,11 @@ public final class McUtils {
     }
 
     public static Screen screen() {
-        return mc().screen;
+        return mc().gui.screen();
     }
 
     public static void setScreen(Screen screen) {
-        mc().setScreen(screen);
+        mc().setScreenAndShow(screen);
     }
 
     public static void playSoundUI(SoundEvent sound) {
@@ -140,7 +140,7 @@ public final class McUtils {
     }
 
     public static void sendMessageToClient(Component component) {
-        mc().getChatListener().handleSystemMessage(component, false);
+        mc().gui.chatListener().handleSystemMessage(component, false);
     }
 
     public static void sendWynntilsPrefixMessage(Component component) {
@@ -193,13 +193,14 @@ public final class McUtils {
                 keybindCommand.startsWith("/") ? ChatComponent.ChatMethod.COMMAND : ChatComponent.ChatMethod.MESSAGE;
 
         // Route through ChatComponent so the existing createScreen mixin can post ChatScreenCreateEvent.
-        mc().gui.getChat().saveAsDraft(keybindCommand);
-        mc().gui.getChat().openScreen(chatMethod, ChatScreen::new);
+        mc().gui.hud.getChat().saveAsDraft(keybindCommand);
+        mc().gui.hud.getChat().openScreen(chatMethod, ChatScreen::new);
     }
 
     public static void displayToast(Component title, Component message, long displayTimeMs) {
         McUtils.mc()
-                .getToastManager()
+                .gui
+                .toastManager()
                 .addToast(new SystemToast(new SystemToast.SystemToastId(displayTimeMs), title, message));
     }
 }

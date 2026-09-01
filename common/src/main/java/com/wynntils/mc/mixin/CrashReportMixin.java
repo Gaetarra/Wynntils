@@ -1,5 +1,5 @@
 /*
- * Copyright © Wynntils 2022-2023.
+ * Copyright © Wynntils 2022-2026.
  * This file is released under LGPLv3. See LICENSE for full license details.
  */
 package com.wynntils.mc.mixin;
@@ -14,13 +14,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(CrashReport.class)
 public abstract class CrashReportMixin {
-    @Inject(
-            method = "getDetails(Ljava/lang/StringBuilder;)V",
-            at =
-                    @At(
-                            value = "INVOKE",
-                            target =
-                                    "Lnet/minecraft/SystemReport;appendToCrashReportString(Ljava/lang/StringBuilder;)V"))
+    // 26.2 removed SystemReport#appendToCrashReportString, so this appends at the end instead.
+    @Inject(method = "getDetails(Ljava/lang/StringBuilder;)V", at = @At("TAIL"))
     private void addWynntilsDetails(StringBuilder builder, CallbackInfo ci) {
         // This needs to go directly to CrashReportManager and not through Managers
         CrashReportCategory wynntilsCrashDetails = CrashReportManager.generateDetails();

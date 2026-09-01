@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.KeyEvent;
@@ -90,7 +90,7 @@ public final class MainMapScreen extends AbstractMapScreen {
 
         addMapButton(new MapButton(
                 Texture.ADD_ICON,
-                (b) -> McUtils.mc().setScreen(PoiCreationScreen.create(this)),
+                (b) -> McUtils.mc().setScreenAndShow(PoiCreationScreen.create(this)),
                 List.of(
                         Component.literal("[>] ")
                                 .withStyle(ChatFormatting.DARK_GREEN)
@@ -151,7 +151,7 @@ public final class MainMapScreen extends AbstractMapScreen {
 
         addMapButton(new MapButton(
                 Texture.WAYPOINT_MANAGER_ICON,
-                (b) -> McUtils.mc().setScreen(WaypointManagementScreen.create(this)),
+                (b) -> McUtils.mc().setScreenAndShow(WaypointManagementScreen.create(this)),
                 List.of(
                         Component.literal("[>] ")
                                 .withStyle(ChatFormatting.RED)
@@ -161,7 +161,7 @@ public final class MainMapScreen extends AbstractMapScreen {
 
         gatheringFilterButton = new MapButton(
                 Texture.TOOL,
-                (b) -> McUtils.mc().setScreen(GatheringNodeFilterScreen.create(this)),
+                (b) -> McUtils.mc().setScreenAndShow(GatheringNodeFilterScreen.create(this)),
                 List.of(
                         Component.literal("[>] ")
                                 .append(Component.translatable("screens.wynntils.map.gatheringFilter.name"))
@@ -239,7 +239,7 @@ public final class MainMapScreen extends AbstractMapScreen {
     }
 
     @Override
-    public void doRender(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+    public void doRender(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
         if (holdingMapKey
                 && !Managers.Feature.getFeatureInstance(MainMapFeature.class)
                         .openMapKeybind
@@ -320,10 +320,10 @@ public final class MainMapScreen extends AbstractMapScreen {
     }
 
     public void changeToGuildMap() {
-        McUtils.mc().setScreen(GuildMapScreen.create(mapCenterX, mapCenterZ, zoomLevel));
+        McUtils.mc().setScreenAndShow(GuildMapScreen.create(mapCenterX, mapCenterZ, zoomLevel));
     }
 
-    private void renderPois(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+    private void renderPois(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
         Stream<? extends Poi> pois = Services.Poi.getServicePois();
 
         pois = Stream.concat(pois, Services.Poi.getCombatPois());

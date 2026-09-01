@@ -15,11 +15,19 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
-@Mixin(NameTagFeatureRenderer.Storage.class)
+/*
+ * NOT REGISTERED in wynntils.mixins.json on 26.2.
+ *
+ * NameTagFeatureRenderer.Storage became the Submit record and its add(...) method is gone;
+ * nametag drawing moved into buildGroup/prepareText, so neither the background opacity nor the
+ * scale call site this hooked still exists. The nametag background opacity and scale options are
+ * therefore inert until this is reworked against the new feature renderer flow.
+ */
+@Mixin(NameTagFeatureRenderer.Submit.class)
 public class NameTagFeatureRendererStorageMixin {
     @ModifyArg(
             method =
-                    "add(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/world/phys/Vec3;ILnet/minecraft/network/chat/Component;ZIDLnet/minecraft/client/renderer/state/CameraRenderState;)V",
+                    "add(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/world/phys/Vec3;ILnet/minecraft/network/chat/Component;ZIDLnet/minecraft/client/renderer/state/level/CameraRenderState;)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Options;getBackgroundOpacity(F)F"))
     private float onNametagOpacityGet(float backgroundOpacity) {
         NametagBackgroundOpacityEvent event = new NametagBackgroundOpacityEvent(backgroundOpacity);
@@ -30,7 +38,7 @@ public class NameTagFeatureRendererStorageMixin {
 
     @WrapOperation(
             method =
-                    "add(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/world/phys/Vec3;ILnet/minecraft/network/chat/Component;ZIDLnet/minecraft/client/renderer/state/CameraRenderState;)V",
+                    "add(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/world/phys/Vec3;ILnet/minecraft/network/chat/Component;ZIDLnet/minecraft/client/renderer/state/level/CameraRenderState;)V",
             at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;scale(FFF)V"))
     private void modifyNametagScale(PoseStack poseStack, float x, float y, float z, Operation<Void> original) {
         NametagScaleEvent event = new NametagScaleEvent();

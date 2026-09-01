@@ -9,6 +9,7 @@ import com.wynntils.models.gear.type.GearType;
 import com.wynntils.utils.mc.SkinUtils;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
@@ -20,35 +21,48 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.CustomModelData;
 
-public record ItemMaterial(ItemStack itemStack) {
+/**
+ * From 26.2 an ItemStack cannot be built until Minecraft has bound item components, which happens
+ * after Wynntils' entrypoint has already started downloading and parsing the item databases. The
+ * backing item is resolved eagerly, so parsing can still tell a real material from a missing one,
+ * but the stack itself is only created on first use, which is always render time.
+ */
+public final class ItemMaterial {
+    private final Item item;
+    private final Supplier<ItemStack> itemStackFactory;
+
+    private volatile ItemStack itemStack;
+
+    private ItemMaterial(Item item, Supplier<ItemStack> itemStackFactory) {
+        this.item = item;
+        this.itemStackFactory = itemStackFactory;
+    }
+
     public static ItemMaterial getDefaultTomeItemMaterial() {
-        ItemStack itemStack = createItemStack(Items.ENCHANTED_BOOK, 0);
-        return new ItemMaterial(itemStack);
+        return withModel(Items.ENCHANTED_BOOK, 0);
     }
 
     public static ItemMaterial getDefaultCharmItemMaterial() {
         // All charms are different items, this is as good as any other item
-        ItemStack itemStack = createItemStack(Items.CLAY, 0);
-        return new ItemMaterial(itemStack);
+        return withModel(Items.CLAY, 0);
     }
 
     public static ItemMaterial fromPlayerHeadUUID(String uuid) {
-        ItemStack itemStack = createItemStack(Items.PLAYER_HEAD, 0);
-        SkinUtils.setPlayerHeadFromUUID(itemStack, uuid);
+        return new ItemMaterial(Items.PLAYER_HEAD, () -> {
+            ItemStack itemStack = createItemStack(Items.PLAYER_HEAD, 0);
+            SkinUtils.setPlayerHeadFromUUID(itemStack, uuid);
 
-        return new ItemMaterial(itemStack);
+            return itemStack;
+        });
     }
 
     public static ItemMaterial fromGearType(GearType gearType) {
         // Material is missing, so just give generic icon for this type of gear (weapon or accessory)
-        ItemStack itemStack = createItemStack(gearType.getDefaultItem(), gearType.getDefaultModel());
-
-        return new ItemMaterial(itemStack);
+        return withModel(gearType.getDefaultItem(), gearType.getDefaultModel());
     }
 
     public static ItemMaterial fromItemId(String itemId, int customModelData) {
-        ItemStack itemStack = createItemStack(getItem(itemId), customModelData);
-        return new ItemMaterial(itemStack);
+        return withModel(getItem(itemId), customModelData);
     }
 
     public static ItemMaterial fromItemTypeCode(int itemTypeCode, int damageCode) {
@@ -65,8 +79,27 @@ public record ItemMaterial(ItemStack itemStack) {
             itemId = alternativeName != null ? alternativeName : toIdString;
         }
 
-        ItemStack itemStack = createItemStackFromDamage(getItem(itemId), damageCode);
-        return new ItemMaterial(itemStack);
+        Item item = getItem(itemId);
+        return new ItemMaterial(item, () -> createItemStackFromDamage(item, damageCode));
+    }
+
+    public ItemStack itemStack() {
+        ItemStack cached = itemStack;
+        if (cached == null) {
+            cached = itemStackFactory.get();
+            itemStack = cached;
+        }
+
+        return cached;
+    }
+
+    /** True when the icon could not be resolved to a real item, so this material is a placeholder. */
+    public boolean isEmpty() {
+        return item == Items.AIR;
+    }
+
+    private static ItemMaterial withModel(Item item, float modelValue) {
+        return new ItemMaterial(item, () -> createItemStack(item, modelValue));
     }
 
     private static ItemStack createItemStack(Item item, float modelValue) {

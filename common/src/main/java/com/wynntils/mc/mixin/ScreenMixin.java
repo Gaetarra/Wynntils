@@ -95,7 +95,7 @@ public abstract class ScreenMixin implements ScreenExtension {
             at = @At("HEAD"),
             cancellable = true)
     private void wrapScreenErrorPre(CrashReport crashReport, CallbackInfo ci) {
-        if (!(Minecraft.getInstance().screen instanceof WynntilsScreen wynntilsScreen)) return;
+        if (!(Minecraft.getInstance().gui.screen() instanceof WynntilsScreen wynntilsScreen)) return;
 
         // This is too involved in error handling to worth risk sending events
         wynntilsScreen.wrapCurrentScreenError(crashReport);

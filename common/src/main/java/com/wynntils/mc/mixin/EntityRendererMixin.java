@@ -4,16 +4,13 @@
  */
 package com.wynntils.mc.mixin;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.wynntils.core.events.MixinHelper;
 import com.wynntils.mc.event.EntityNameTagRenderEvent;
 import com.wynntils.mc.extension.EntityExtension;
 import com.wynntils.mc.extension.EntityRenderStateExtension;
 import com.wynntils.utils.colors.CustomColor;
-import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
-import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.world.entity.Entity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -46,17 +43,11 @@ public abstract class EntityRendererMixin<T extends Entity, S extends EntityRend
 
     @Inject(
             method =
-                    "submitNameTag(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/state/CameraRenderState;)V",
+                    "extractNameTags(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/client/renderer/entity/state/EntityRenderState;F)V",
             at = @At("HEAD"),
             cancellable = true)
-    private void onNameTagSubmitPre(
-            S renderState,
-            PoseStack poseStack,
-            SubmitNodeCollector nodeCollector,
-            CameraRenderState cameraRenderState,
-            CallbackInfo ci) {
-        EntityNameTagRenderEvent event =
-                new EntityNameTagRenderEvent(renderState, poseStack, nodeCollector, cameraRenderState);
+    private void onNameTagSubmitPre(T entity, S renderState, float partialTick, CallbackInfo ci) {
+        EntityNameTagRenderEvent event = new EntityNameTagRenderEvent(renderState);
         MixinHelper.post(event);
         if (event.isCanceled()) {
             ci.cancel();

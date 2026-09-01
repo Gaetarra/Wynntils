@@ -7,7 +7,7 @@ package com.wynntils.mc.event;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
-import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.neoforged.bus.api.Event;
 import net.neoforged.bus.api.ICancellableEvent;
 
@@ -26,6 +26,15 @@ public class EntityNameTagRenderEvent extends Event implements ICancellableEvent
         this.poseStack = poseStack;
         this.submitNodeCollector = submitNodeCollector;
         this.cameraRenderState = cameraRenderState;
+    }
+
+    /**
+     * 26.2 replaced EntityRenderer#submitNameTag with #extractNameTags, which receives no PoseStack,
+     * SubmitNodeCollector or CameraRenderState. Events raised from that path carry only the render
+     * state and are used for cancellation; the avatar path still supplies the full set.
+     */
+    public EntityNameTagRenderEvent(EntityRenderState entityRenderState) {
+        this(entityRenderState, null, null, null);
     }
 
     public EntityRenderState getEntityRenderState() {

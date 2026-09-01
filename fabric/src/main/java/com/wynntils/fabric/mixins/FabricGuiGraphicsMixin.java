@@ -10,7 +10,7 @@ import com.wynntils.core.events.MixinHelper;
 import com.wynntils.mc.event.TooltipRenderEvent;
 import java.util.List;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipPositioner;
 import net.minecraft.resources.Identifier;
@@ -20,11 +20,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(GuiGraphics.class)
+@Mixin(GuiGraphicsExtractor.class)
 public abstract class FabricGuiGraphicsMixin {
     @Inject(
             method =
-                    "renderTooltip(Lnet/minecraft/client/gui/Font;Ljava/util/List;IILnet/minecraft/client/gui/screens/inventory/tooltip/ClientTooltipPositioner;Lnet/minecraft/resources/Identifier;)V",
+                    "tooltip(Lnet/minecraft/client/gui/Font;Ljava/util/List;IILnet/minecraft/client/gui/screens/inventory/tooltip/ClientTooltipPositioner;Lnet/minecraft/resources/Identifier;)V",
             at = @At("HEAD"))
     private void renderTooltipPre(
             Font font,
@@ -34,12 +34,12 @@ public abstract class FabricGuiGraphicsMixin {
             ClientTooltipPositioner positioner,
             Identifier background,
             CallbackInfo ci) {
-        MixinHelper.post(new TooltipRenderEvent.Pre((GuiGraphics) (Object) this));
+        MixinHelper.post(new TooltipRenderEvent.Pre((GuiGraphicsExtractor) (Object) this));
     }
 
     @WrapOperation(
             method =
-                    "renderTooltip(Lnet/minecraft/client/gui/Font;Ljava/util/List;IILnet/minecraft/client/gui/screens/inventory/tooltip/ClientTooltipPositioner;Lnet/minecraft/resources/Identifier;)V",
+                    "tooltip(Lnet/minecraft/client/gui/Font;Ljava/util/List;IILnet/minecraft/client/gui/screens/inventory/tooltip/ClientTooltipPositioner;Lnet/minecraft/resources/Identifier;)V",
             at =
                     @At(
                             value = "INVOKE",
@@ -54,7 +54,7 @@ public abstract class FabricGuiGraphicsMixin {
             int tooltipWidth,
             int tooltipHeight,
             Operation<Vector2ic> operation) {
-        TooltipRenderEvent.Position event = new TooltipRenderEvent.Position((GuiGraphics) (Object) this);
+        TooltipRenderEvent.Position event = new TooltipRenderEvent.Position((GuiGraphicsExtractor) (Object) this);
         MixinHelper.post(event);
 
         if (event.getPositioner() != null) {
@@ -67,7 +67,7 @@ public abstract class FabricGuiGraphicsMixin {
 
     @Inject(
             method =
-                    "renderTooltip(Lnet/minecraft/client/gui/Font;Ljava/util/List;IILnet/minecraft/client/gui/screens/inventory/tooltip/ClientTooltipPositioner;Lnet/minecraft/resources/Identifier;)V",
+                    "tooltip(Lnet/minecraft/client/gui/Font;Ljava/util/List;IILnet/minecraft/client/gui/screens/inventory/tooltip/ClientTooltipPositioner;Lnet/minecraft/resources/Identifier;)V",
             at = @At("RETURN"))
     private void renderTooltipPost(
             Font font,
@@ -77,6 +77,6 @@ public abstract class FabricGuiGraphicsMixin {
             ClientTooltipPositioner positioner,
             Identifier background,
             CallbackInfo ci) {
-        MixinHelper.post(new TooltipRenderEvent.Post((GuiGraphics) (Object) this));
+        MixinHelper.post(new TooltipRenderEvent.Post((GuiGraphicsExtractor) (Object) this));
     }
 }

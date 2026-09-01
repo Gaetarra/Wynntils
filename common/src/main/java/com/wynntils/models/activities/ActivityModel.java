@@ -415,7 +415,7 @@ public final class ActivityModel extends Model {
         if (questInfo.nextLocation().isPresent()) {
             McUtils.player().closeContainer();
             McUtils.mc()
-                    .setScreen(MainMapScreen.create(
+                    .setScreenAndShow(MainMapScreen.create(
                             questInfo.nextLocation().get().x(),
                             questInfo.nextLocation().get().z()));
         }
@@ -427,7 +427,7 @@ public final class ActivityModel extends Model {
         if (caveInfo.getNextLocation().isPresent()) {
             McUtils.player().closeContainer();
             McUtils.mc()
-                    .setScreen(MainMapScreen.create(
+                    .setScreenAndShow(MainMapScreen.create(
                             caveInfo.getNextLocation().get().x(),
                             caveInfo.getNextLocation().get().z()));
         }
@@ -490,7 +490,8 @@ public final class ActivityModel extends Model {
 
     private boolean isFulfilled(Matcher colorCodeMatcher) {
         // Check if the requirement is colored green
-        return colorCodeMatcher.group(1).charAt(0) == ChatFormatting.GREEN.getChar();
+        return colorCodeMatcher.group(1).charAt(0)
+                == ChatFormatting.GREEN.toString().charAt(1);
     }
 
     public CappedValue getOverallProgress() {

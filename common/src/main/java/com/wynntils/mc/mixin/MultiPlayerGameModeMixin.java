@@ -20,7 +20,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import org.spongepowered.asm.mixin.Mixin;
@@ -59,11 +59,11 @@ public abstract class MultiPlayerGameModeMixin {
 
     @Inject(
             method =
-                    "handleInventoryMouseClick(IIILnet/minecraft/world/inventory/ClickType;Lnet/minecraft/world/entity/player/Player;)V",
+                    "handleContainerInput(IIILnet/minecraft/world/inventory/ContainerInput;Lnet/minecraft/world/entity/player/Player;)V",
             at = @At("HEAD"),
             cancellable = true)
     private void handleInventoryMouseClickPre(
-            int containerId, int slotId, int mouseButton, ClickType clickType, Player player, CallbackInfo ci) {
+            int containerId, int slotId, int mouseButton, ContainerInput clickType, Player player, CallbackInfo ci) {
         if (containerId != player.containerMenu.containerId) return;
 
         ContainerClickEvent event = new ContainerClickEvent(player.containerMenu, slotId, clickType, mouseButton);
@@ -108,7 +108,7 @@ public abstract class MultiPlayerGameModeMixin {
 
     @Inject(
             method =
-                    "interactAt(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/EntityHitResult;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResult;",
+                    "interact(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/EntityHitResult;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResult;",
             at = @At("HEAD"),
             cancellable = true)
     private void interactAt(
@@ -125,13 +125,20 @@ public abstract class MultiPlayerGameModeMixin {
         }
     }
 
+    // 26.2 merged interactAt into interact: the single remaining method both sends the interact-at
+    // packet and calls Player#interactOn, so both events are posted from that one call site. Mixin
+    // returns as soon as a HEAD callback cancels, so Interact is skipped if InteractAt cancelled.
     @Inject(
             method =
-                    "interact(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResult;",
+                    "interact(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/EntityHitResult;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResult;",
             at = @At("HEAD"),
             cancellable = true)
     private void interact(
-            Player player, Entity target, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
+            Player player,
+            Entity target,
+            EntityHitResult ray,
+            InteractionHand hand,
+            CallbackInfoReturnable<InteractionResult> cir) {
         PlayerInteractEvent.Interact event = new PlayerInteractEvent.Interact(player, hand, target);
         MixinHelper.post(event);
         if (event.isCanceled()) {

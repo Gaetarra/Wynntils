@@ -1,5 +1,5 @@
 /*
- * Copyright © Wynntils 2022-2025.
+ * Copyright © Wynntils 2022-2026.
  * This file is released under LGPLv3. See LICENSE for full license details.
  */
 package com.wynntils.handlers.bossbar;
@@ -141,7 +141,9 @@ public final class BossBarHandler extends Handler {
                     }
                 }
 
-                WynntilsMod.error("Failed to match already matched boss bar");
+                // Log what actually failed: without the bar and the text there is nothing to act on
+                WynntilsMod.error("Failed to match already matched boss bar "
+                        + trackedBar.getClass().getSimpleName() + ", name was: " + nameText.getString());
                 return;
             });
         }

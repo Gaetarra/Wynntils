@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Set;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.BoundedFloatFunction;
 import net.minecraft.util.CubicSpline;
@@ -30,13 +31,13 @@ import org.joml.Vector2d;
 
 public final class LootrunCompiler {
     private static final List<Integer> COLORS = List.of(
-            ChatFormatting.RED.getColor(),
-            ChatFormatting.GOLD.getColor(),
-            ChatFormatting.YELLOW.getColor(),
-            ChatFormatting.GREEN.getColor(),
-            ChatFormatting.BLUE.getColor(),
+            TextColor.fromLegacyFormat(ChatFormatting.RED).getValue(),
+            TextColor.fromLegacyFormat(ChatFormatting.GOLD).getValue(),
+            TextColor.fromLegacyFormat(ChatFormatting.YELLOW).getValue(),
+            TextColor.fromLegacyFormat(ChatFormatting.GREEN).getValue(),
+            TextColor.fromLegacyFormat(ChatFormatting.BLUE).getValue(),
             0x3f00ff,
-            ChatFormatting.DARK_PURPLE.getColor());
+            TextColor.fromLegacyFormat(ChatFormatting.DARK_PURPLE).getValue());
 
     public static LootrunPathInstance compile(UncompiledLootrunPath uncompiled, boolean recording) {
         Long2ObjectMap<List<ColoredPath>> points = generatePointsByChunk(uncompiled.path(), recording);
@@ -76,11 +77,11 @@ public final class LootrunCompiler {
         List<LootrunPath> result = new ArrayList<>();
         for (LootrunPath current : positions) {
             float distance = 0f;
-            CubicSpline.Builder<Float, BoundedFloatFunction<Float>> builderX =
+            CubicSpline.Builder<BoundedFloatFunction<Float>> builderX =
                     CubicSpline.builder(BoundedFloatFunction.IDENTITY);
-            CubicSpline.Builder<Float, BoundedFloatFunction<Float>> builderY =
+            CubicSpline.Builder<BoundedFloatFunction<Float>> builderY =
                     CubicSpline.builder(BoundedFloatFunction.IDENTITY);
-            CubicSpline.Builder<Float, BoundedFloatFunction<Float>> builderZ =
+            CubicSpline.Builder<BoundedFloatFunction<Float>> builderZ =
                     CubicSpline.builder(BoundedFloatFunction.IDENTITY);
             for (int i = 0; i < current.points().size(); i++) {
                 Vec3 position = current.points().get(i);
@@ -101,9 +102,10 @@ public final class LootrunCompiler {
                 builderY.addPoint(distance, (float) position.y, slopeY);
                 builderZ.addPoint(distance, (float) position.z, slopeZ);
             }
-            CubicSpline<Float, BoundedFloatFunction<Float>> splineX = builderX.build();
-            CubicSpline<Float, BoundedFloatFunction<Float>> splineY = builderY.build();
-            CubicSpline<Float, BoundedFloatFunction<Float>> splineZ = builderZ.build();
+            // 26.2: CubicSpline is no longer sampleable directly; asSampler wraps it.
+            BoundedFloatFunction<Float> splineX = CubicSpline.asSampler(builderX.build());
+            BoundedFloatFunction<Float> splineY = CubicSpline.asSampler(builderY.build());
+            BoundedFloatFunction<Float> splineZ = CubicSpline.asSampler(builderZ.build());
 
             LootrunPath newResult = new LootrunPath(new ArrayList<>());
             for (float i = 0f; i < distance; i += (1f / sampleRate)) {
@@ -195,10 +197,10 @@ public final class LootrunCompiler {
                 }
 
                 lastChunkPos = currentChunkPos;
-                sampleByChunk.putIfAbsent(ChunkPos.asLong(currentChunkPos.x, currentChunkPos.z), new ArrayList<>());
+                sampleByChunk.putIfAbsent(ChunkPos.pack(currentChunkPos.x, currentChunkPos.z), new ArrayList<>());
                 lastLocationList = new ColoredPath(new ArrayList<>());
                 sampleByChunk
-                        .get(ChunkPos.asLong(currentChunkPos.x, currentChunkPos.z))
+                        .get(ChunkPos.pack(currentChunkPos.x, currentChunkPos.z))
                         .add(lastLocationList);
             }
             lastLocationList.points().add(locationsList.points().get(i));
@@ -275,7 +277,8 @@ public final class LootrunCompiler {
     private static Long2ObjectMap<Set<BlockPos>> getChests(Set<BlockPos> chests) {
         Long2ObjectMap<Set<BlockPos>> result = new Long2ObjectOpenHashMap<>();
         for (BlockPos pos : chests) {
-            Set<BlockPos> addTo = result.computeIfAbsent(new ChunkPos(pos).toLong(), (chunk) -> new HashSet<>());
+            Set<BlockPos> addTo =
+                    result.computeIfAbsent(ChunkPos.containing(pos).pack(), (chunk) -> new HashSet<>());
             addTo.add(pos);
         }
         return result;
@@ -284,8 +287,8 @@ public final class LootrunCompiler {
     private static Long2ObjectMap<List<LootrunNote>> getNotes(List<LootrunNote> notes) {
         Long2ObjectMap<List<LootrunNote>> result = new Long2ObjectOpenHashMap<>();
         for (LootrunNote note : notes) {
-            ChunkPos chunk = new ChunkPos(PosUtils.newBlockPos(note.position()));
-            List<LootrunNote> notesChunk = result.computeIfAbsent(chunk.toLong(), (chunkPos) -> new ArrayList<>());
+            ChunkPos chunk = ChunkPos.containing(PosUtils.newBlockPos(note.position()));
+            List<LootrunNote> notesChunk = result.computeIfAbsent(chunk.pack(), (chunkPos) -> new ArrayList<>());
             notesChunk.add(note);
         }
         return result;
