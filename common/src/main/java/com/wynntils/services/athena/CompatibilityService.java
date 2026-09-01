@@ -75,7 +75,7 @@ public class CompatibilityService extends Service {
                         new SystemToast.SystemToastId(TOAST_DISPLAY_TIME),
                         Component.translatable("service.wynntils.compatibility.toastTitle"),
                         toastMessage);
-                McUtils.mc().getToastManager().addToast(warningToast);
+                McUtils.mc().gui.toastManager().addToast(warningToast);
                 toastExpire = System.currentTimeMillis() + TOAST_DISPLAY_TIME;
             }
         } else if (event.getNewState() == WorldState.NOT_CONNECTED) {

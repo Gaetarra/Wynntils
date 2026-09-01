@@ -128,9 +128,9 @@ public final class ChatTabService extends Service {
         focusedChatTabData.setUnreadMessages(false);
 
         // Copy the focused tabs messages into the wrapping chat component for display
-        McUtils.mc().gui.chat.allMessages = focusedChatTabData.getChatComponent().allMessages;
-        McUtils.mc().gui.chat.trimmedMessages = focusedChatTabData.getChatComponent().trimmedMessages;
-        McUtils.mc().gui.chat.refreshTrimmedMessages();
+        McUtils.mc().gui.hud.chat.allMessages = focusedChatTabData.getChatComponent().allMessages;
+        McUtils.mc().gui.hud.chat.trimmedMessages = focusedChatTabData.getChatComponent().trimmedMessages;
+        McUtils.mc().gui.hud.chat.refreshTrimmedMessages();
     }
     // endregion
 
@@ -152,7 +152,7 @@ public final class ChatTabService extends Service {
                         chatTab, new ChatTabData(new ChatComponent(McUtils.mc()), false, chatTab.customRegexString())));
 
         // Pass the historic messages from the vanilla chat component to all the new tabs
-        McUtils.mc().gui.chat.allMessages.reversed().forEach(msg -> {
+        McUtils.mc().gui.hud.chat.allMessages.reversed().forEach(msg -> {
             Component component = msg.content();
             StyledText styledText = StyledText.fromComponent(component);
             RecipientType recipientType = Handlers.Chat.getRecipientType(styledText);
@@ -164,8 +164,8 @@ public final class ChatTabService extends Service {
             });
         });
 
-        vanillaChatComponent = McUtils.mc().gui.chat;
-        McUtils.mc().gui.chat = new WrappingChatComponent(McUtils.mc());
+        vanillaChatComponent = McUtils.mc().gui.hud.chat;
+        McUtils.mc().gui.hud.chat = new WrappingChatComponent(McUtils.mc());
 
         setFocusedTab(getChatTabs().getFirst());
     }
@@ -173,7 +173,7 @@ public final class ChatTabService extends Service {
     public void disable() {
         if (!isEnabled()) return;
 
-        McUtils.mc().gui.chat = vanillaChatComponent;
+        McUtils.mc().gui.hud.chat = vanillaChatComponent;
         vanillaChatComponent = null;
 
         reset();
@@ -288,7 +288,7 @@ public final class ChatTabService extends Service {
 
     public void modifyChatHistory(Consumer<List<GuiMessage>> allMessagesConsumer) {
         if (!isEnabled()) {
-            ChatComponent chatComponent = McUtils.mc().gui.chat;
+            ChatComponent chatComponent = McUtils.mc().gui.hud.chat;
 
             allMessagesConsumer.accept(chatComponent.allMessages);
             chatComponent.refreshTrimmedMessages();
