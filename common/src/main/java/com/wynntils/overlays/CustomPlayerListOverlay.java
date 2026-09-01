@@ -117,7 +117,7 @@ public class CustomPlayerListOverlay extends Overlay {
                     McUtils.mc().getWindow().getScreenHeight());
         }
 
-        renderBackground(guiGraphics);
+        extractBackground(guiGraphics);
 
         renderPlayerNames(guiGraphics, availablePlayers.get());
 
@@ -176,7 +176,7 @@ public class CustomPlayerListOverlay extends Overlay {
         }
     }
 
-    private void renderBackground(GuiGraphicsExtractor guiGraphics) {
+    private void extractBackground(GuiGraphicsExtractor guiGraphics) {
         RenderUtils.drawTexturedRect(
                 guiGraphics,
                 Texture.PLAYER_LIST_OVERLAY.identifier(),

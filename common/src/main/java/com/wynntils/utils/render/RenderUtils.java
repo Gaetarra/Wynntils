@@ -1310,7 +1310,7 @@ public final class RenderUtils {
                 .collect(Util.toMutableList());
         tooltipImage.ifPresent(
                 tooltipComponent -> list.add(list.isEmpty() ? 0 : 1, ClientTooltipComponent.create(tooltipComponent)));
-        guiGraphics.renderTooltip(font, list, mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, background);
+        guiGraphics.tooltip(font, list, mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, background);
     }
 
     public static void renderCustomNametag(

@@ -64,7 +64,7 @@ public abstract class FabricAbstractContainerScreenMixin {
 
     // See the NeoForgeAbstractContainerScreenMixin#renderSlotPreCount for the Forge mixin.
     @Inject(
-            method = "renderSlot(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/world/inventory/Slot;II)V",
+            method = "extractSlot(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/world/inventory/Slot;II)V",
             at =
                     @At(
                             value = "INVOKE",

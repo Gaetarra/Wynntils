@@ -60,7 +60,7 @@ public class LoadoutMenuNameWidget extends TextInputBoxWidget implements Tooltip
 
     @Override
     public void extractWidgetRenderState(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
-        renderBackground(guiGraphics);
+        extractBackground(guiGraphics);
 
         editButtonHovered = isEditButtonHovered(mouseX, mouseY);
         if (editButtonHovered) {
@@ -179,7 +179,7 @@ public class LoadoutMenuNameWidget extends TextInputBoxWidget implements Tooltip
         }
     }
 
-    protected void renderBackground(GuiGraphicsExtractor guiGraphics) {
+    protected void extractBackground(GuiGraphicsExtractor guiGraphics) {
         RenderUtils.drawNineSliceScalingTexturedRect(
                 guiGraphics,
                 Texture.BUILD_LOADOUTS_WIDGET_BACKGROUND,

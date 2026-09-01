@@ -19,7 +19,7 @@ public class ListSearchWidget extends SearchWidget {
     }
 
     @Override
-    protected void renderBackground(GuiGraphicsExtractor guiGraphics) {
+    protected void extractBackground(GuiGraphicsExtractor guiGraphics) {
         RenderUtils.drawScalingTexturedRect(
                 guiGraphics,
                 Texture.LIST_SEARCH.identifier(),

@@ -18,7 +18,7 @@ public class GuideSearchWidget extends SearchWidget {
     }
 
     @Override
-    protected void renderBackground(GuiGraphicsExtractor guiGraphics) {
+    protected void extractBackground(GuiGraphicsExtractor guiGraphics) {
         RenderUtils.drawNineSliceScalingTexturedRect(
                 guiGraphics,
                 isHovered ? Texture.GUIDE_WIDGET_BACKGROUND_HOVERED : Texture.GUIDE_WIDGET_BACKGROUND,

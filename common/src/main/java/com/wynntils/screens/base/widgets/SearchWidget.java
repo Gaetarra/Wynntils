@@ -55,7 +55,7 @@ public class SearchWidget extends TextInputBoxWidget {
             guiGraphics.requestCursor(CursorTypes.IBEAM);
         }
 
-        renderBackground(guiGraphics);
+        extractBackground(guiGraphics);
 
         renderText(
                 guiGraphics,
@@ -134,7 +134,7 @@ public class SearchWidget extends TextInputBoxWidget {
                 false);
     }
 
-    protected void renderBackground(GuiGraphicsExtractor guiGraphics) {
+    protected void extractBackground(GuiGraphicsExtractor guiGraphics) {
         RenderUtils.drawRect(guiGraphics, CommonColors.BLACK, this.getX(), this.getY(), this.width, this.height);
         RenderUtils.drawRectBorders(
                 guiGraphics,

@@ -29,7 +29,7 @@ public class NewLoadoutInputWidget extends SearchWidget {
     }
 
     @Override
-    protected void renderBackground(GuiGraphicsExtractor guiGraphics) {
+    protected void extractBackground(GuiGraphicsExtractor guiGraphics) {
         RenderUtils.drawNineSliceScalingTexturedRect(
                 guiGraphics, Texture.BUILD_LOADOUTS_TEXT_INPUT_BOX, getX(), getY(), this.width, this.height);
     }

@@ -18,7 +18,7 @@ public class SettingsSearchWidget extends SearchWidget {
     }
 
     @Override
-    protected void renderBackground(GuiGraphicsExtractor guiGraphics) {
+    protected void extractBackground(GuiGraphicsExtractor guiGraphics) {
         RenderUtils.drawTexturedRect(guiGraphics, Texture.TAG_SEARCH, getX() - 25, getY() - 9);
     }
 }

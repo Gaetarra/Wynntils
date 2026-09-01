@@ -30,7 +30,7 @@ public class LoadoutSearchWidget extends SearchWidget {
     }
 
     @Override
-    protected void renderBackground(GuiGraphicsExtractor guiGraphics) {
+    protected void extractBackground(GuiGraphicsExtractor guiGraphics) {
         RenderUtils.drawNineSliceScalingTexturedRect(
                 guiGraphics,
                 Texture.BUILD_LOADOUTS_WIDGET_BACKGROUND_LIGHT,

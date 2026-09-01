@@ -18,7 +18,7 @@ public class ContentBookSearchWidget extends SearchWidget {
     }
 
     @Override
-    protected void renderBackground(GuiGraphicsExtractor guiGraphics) {
+    protected void extractBackground(GuiGraphicsExtractor guiGraphics) {
         RenderUtils.drawTexturedRect(guiGraphics, Texture.CONTENT_BOOK_SEARCH, getX() - 15, getY());
     }
 }

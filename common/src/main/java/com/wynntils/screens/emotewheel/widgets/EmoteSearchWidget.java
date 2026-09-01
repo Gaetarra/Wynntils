@@ -22,7 +22,7 @@ public class EmoteSearchWidget extends SearchWidget {
     }
 
     @Override
-    protected void renderBackground(GuiGraphicsExtractor guiGraphics) {
+    protected void extractBackground(GuiGraphicsExtractor guiGraphics) {
         RenderUtils.drawRect(guiGraphics, FILL_COLOR, this.getX(), this.getY(), this.width, this.height);
         RenderUtils.drawRectBorders(
                 guiGraphics,
