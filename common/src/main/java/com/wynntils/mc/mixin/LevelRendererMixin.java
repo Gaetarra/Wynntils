@@ -16,7 +16,7 @@ import com.wynntils.mc.event.RenderLevelEvent;
 import com.wynntils.mc.event.RenderTileLevelLastEvent;
 import com.wynntils.mc.extension.EntityExtension;
 import com.wynntils.mc.extension.EntityRenderStateExtension;
-import net.minecraft.client.Camera;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
@@ -29,6 +29,7 @@ import net.minecraft.client.renderer.state.level.LevelRenderState;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.Entity;
 import org.joml.Matrix4f;
+import org.joml.Matrix4fc;
 import org.joml.Vector4f;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -54,15 +55,13 @@ public abstract class LevelRendererMixin {
     @Inject(
             at = @At("TAIL"),
             method =
-                    "render(Lcom/mojang/blaze3d/resource/GraphicsResourceAllocator;Lnet/minecraft/client/DeltaTracker;ZLnet/minecraft/client/Camera;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;Lorg/joml/Vector4f;Z)V")
+                    "render(Lcom/mojang/blaze3d/resource/GraphicsResourceAllocator;Lnet/minecraft/client/DeltaTracker;ZLnet/minecraft/client/renderer/state/level/CameraRenderState;Lorg/joml/Matrix4fc;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;Lorg/joml/Vector4f;Z)V")
     private void renderLevelPost(
             GraphicsResourceAllocator graphicsResourceAllocator,
             DeltaTracker deltaTracker,
             boolean renderBlockOutline,
-            Camera camera,
-            Matrix4f frustumMatrix,
-            Matrix4f projectionMatrix,
-            Matrix4f cullingProjectionMatrix,
+            CameraRenderState camera,
+            Matrix4fc projectionMatrix,
             GpuBufferSlice shaderFog,
             Vector4f fogColor,
             boolean renderSky,
@@ -75,15 +74,13 @@ public abstract class LevelRendererMixin {
     @Inject(
             at = @At("HEAD"),
             method =
-                    "render(Lcom/mojang/blaze3d/resource/GraphicsResourceAllocator;Lnet/minecraft/client/DeltaTracker;ZLnet/minecraft/client/Camera;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;Lorg/joml/Vector4f;Z)V")
+                    "render(Lcom/mojang/blaze3d/resource/GraphicsResourceAllocator;Lnet/minecraft/client/DeltaTracker;ZLnet/minecraft/client/renderer/state/level/CameraRenderState;Lorg/joml/Matrix4fc;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;Lorg/joml/Vector4f;Z)V")
     private void renderLevelPre(
             GraphicsResourceAllocator graphicsResourceAllocator,
             DeltaTracker deltaTracker,
             boolean renderBlockOutline,
-            Camera camera,
-            Matrix4f frustumMatrix,
-            Matrix4f projectionMatrix,
-            Matrix4f cullingProjectionMatrix,
+            CameraRenderState camera,
+            Matrix4fc projectionMatrix,
             GpuBufferSlice shaderFog,
             Vector4f fogColor,
             boolean renderSky,
@@ -94,16 +91,14 @@ public abstract class LevelRendererMixin {
 
     @Inject(
             method =
-                    "render(Lcom/mojang/blaze3d/resource/GraphicsResourceAllocator;Lnet/minecraft/client/DeltaTracker;ZLnet/minecraft/client/Camera;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;Lorg/joml/Vector4f;Z)V",
+                    "render(Lcom/mojang/blaze3d/resource/GraphicsResourceAllocator;Lnet/minecraft/client/DeltaTracker;ZLnet/minecraft/client/renderer/state/level/CameraRenderState;Lorg/joml/Matrix4fc;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;Lorg/joml/Vector4f;Z)V",
             at = @At("HEAD"))
     private void captureDeltaTracker(
             GraphicsResourceAllocator graphicsResourceAllocator,
             DeltaTracker deltaTracker,
             boolean renderBlockOutline,
-            Camera camera,
-            Matrix4f frustumMatrix,
-            Matrix4f projectionMatrix,
-            Matrix4f cullingProjectionMatrix,
+            CameraRenderState camera,
+            Matrix4fc projectionMatrix,
             GpuBufferSlice shaderFog,
             Vector4f fogColor,
             boolean renderSky,
