@@ -44,19 +44,9 @@ public abstract class EntityRendererMixin<T extends Entity, S extends EntityRend
         }
     }
 
-    @Inject(
-            method =
-                    "submitNameTag(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/state/CameraRenderState;)V",
-            at = @At("HEAD"),
-            cancellable = true)
-    private void onNameTagSubmitPre(
-            S renderState,
-            PoseStack poseStack,
-            SubmitNodeCollector nodeCollector,
-            CameraRenderState cameraRenderState,
-            CallbackInfo ci) {
-        EntityNameTagRenderEvent event =
-                new EntityNameTagRenderEvent(renderState, poseStack, nodeCollector, cameraRenderState);
+    @Inject(method = "extractNameTags(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/client/renderer/entity/state/EntityRenderState;F)V", at = @At("HEAD"), cancellable = true)
+    private void onNameTagSubmitPre(T entity, S renderState, float partialTick, CallbackInfo ci) {
+        EntityNameTagRenderEvent event = new EntityNameTagRenderEvent(renderState);
         MixinHelper.post(event);
         if (event.isCanceled()) {
             ci.cancel();

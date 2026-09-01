@@ -15,14 +15,16 @@ public enum EmeraldUnits {
     LIQUID_EMERALD_STX(Items.EXPERIENCE_BOTTLE, "Stack of Liquid Emeralds", "stx", 64 * 64 * 64);
 
     private final Item itemType;
-    private final ItemStack itemStack;
     private final String displayName;
     private final String symbol;
     private final int multiplier;
 
+    // Built lazily: from 26.2 an ItemStack cannot be created until item components are bound,
+    // which happens after Wynntils' entrypoint runs.
+    private ItemStack itemStack;
+
     EmeraldUnits(Item itemType, String displayName, String symbol, int multiplier) {
         this.itemType = itemType;
-        this.itemStack = new ItemStack(itemType);
         this.displayName = displayName;
         this.symbol = symbol;
         this.multiplier = multiplier;
@@ -33,6 +35,10 @@ public enum EmeraldUnits {
     }
 
     public ItemStack getItemStack() {
+        if (itemStack == null) {
+            itemStack = new ItemStack(itemType);
+        }
+
         return itemStack;
     }
 

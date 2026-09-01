@@ -116,7 +116,7 @@ public abstract class LevelRendererMixin {
     }
 
     @Inject(
-            method = "method_62214", // framepass.executes lambda inside the addMainPass method
+            method = "lambda$addMainPass$0", // framepass.executes lambda inside the addMainPass method
             at =
                     @At(
                             value = "INVOKE",
@@ -145,12 +145,12 @@ public abstract class LevelRendererMixin {
 
     @WrapWithCondition(
             method =
-                    "submitEntities(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/state/LevelRenderState;Lnet/minecraft/client/renderer/SubmitNodeCollector;)V",
+                    "submitEntities(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/state/level/LevelRenderState;Lnet/minecraft/client/renderer/SubmitNodeCollector;)V",
             at =
                     @At(
                             value = "INVOKE",
                             target =
-                                    "Lnet/minecraft/client/renderer/entity/EntityRenderDispatcher;submit(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;Lnet/minecraft/client/renderer/state/CameraRenderState;DDDLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;)V"))
+                                    "Lnet/minecraft/client/renderer/entity/EntityRenderDispatcher;submit(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;Lnet/minecraft/client/renderer/state/level/CameraRenderState;DDDLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;)V"))
     private boolean onSubmitEntity(
             EntityRenderDispatcher entityRenderDispatcher,
             EntityRenderState renderState,

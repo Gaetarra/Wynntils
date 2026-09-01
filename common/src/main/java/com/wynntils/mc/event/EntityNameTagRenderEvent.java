@@ -28,6 +28,15 @@ public class EntityNameTagRenderEvent extends Event implements ICancellableEvent
         this.cameraRenderState = cameraRenderState;
     }
 
+    /**
+     * 26.2 replaced EntityRenderer#submitNameTag with #extractNameTags, which receives no PoseStack,
+     * SubmitNodeCollector or CameraRenderState. Events raised from that path carry only the render
+     * state and are used for cancellation; the avatar path still supplies the full set.
+     */
+    public EntityNameTagRenderEvent(EntityRenderState entityRenderState) {
+        this(entityRenderState, null, null, null);
+    }
+
     public EntityRenderState getEntityRenderState() {
         return entityRenderState;
     }

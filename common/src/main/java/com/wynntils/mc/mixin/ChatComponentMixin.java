@@ -39,7 +39,7 @@ public abstract class ChatComponentMixin {
     }
 
     @WrapOperation(
-            method = "addMessageToDisplayQueue(Lnet/minecraft/client/GuiMessage;)V",
+            method = "addMessageToDisplayQueue(Lnet/minecraft/client/multiplayer/chat/GuiMessage;)V",
             at = @At(value = "INVOKE", target = "Ljava/util/List;addFirst(Ljava/lang/Object;)V"))
     private void addMessageToDisplayQueue(
             List<GuiMessage.Line> instance,
@@ -52,7 +52,7 @@ public abstract class ChatComponentMixin {
     }
 
     @Inject(
-            method = "render(Lnet/minecraft/client/gui/components/ChatComponent$ChatGraphicsAccess;IIZ)V",
+            method = "extractRenderState(Lnet/minecraft/client/gui/components/ChatComponent$ChatGraphicsAccess;IILnet/minecraft/client/gui/components/ChatComponent$DisplayMode;)V",
             at =
                     @At(
                             value = "INVOKE",
@@ -61,13 +61,13 @@ public abstract class ChatComponentMixin {
             ChatComponent.ChatGraphicsAccess chatGraphicsAccess,
             int mouseX,
             int mouseY,
-            boolean focused,
+            ChatComponent.DisplayMode displayMode,
             CallbackInfo ci) {
         MixinHelper.post(new ChatComponentRenderEvent.Pre((ChatComponent) (Object) this));
     }
 
     @ModifyArg(
-            method = "method_75801", // updatePose lambda in render
+            method = "lambda$extractRenderState$0", // updatePose lambda in extractRenderState
             at =
                     @At(
                             value = "INVOKE",
@@ -83,7 +83,7 @@ public abstract class ChatComponentMixin {
     }
 
     @WrapOperation(
-            method = "method_75802", // forEachLine in render
+            method = "lambda$extractRenderState$1", // forEachLine in extractRenderState
             at =
                     @At(
                             value = "INVOKE",
