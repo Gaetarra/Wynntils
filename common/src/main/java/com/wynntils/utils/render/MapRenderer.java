@@ -209,7 +209,7 @@ public final class MapRenderer {
         float rotationAngle;
         if (followPlayerRotation) {
             rotationAngle = McUtils.player().getYRot()
-                    - McUtils.mc().gameRenderer.getMainCamera().yRot();
+                    - McUtils.mc().gameRenderer.mainCamera().yRot();
         } else {
             rotationAngle = 180 + McUtils.player().getYRot();
         }
@@ -268,12 +268,12 @@ public final class MapRenderer {
                 float z2 = getRenderZ((int) worldZ2, mapCenterZ, centerZ, zoomRenderScale);
 
                 CustomColor renderColor =
-                        mappedChunks.contains(chunkPos.toLong()) ? CommonColors.GREEN : CommonColors.RED;
+                        mappedChunks.contains(chunkPos.pack()) ? CommonColors.GREEN : CommonColors.RED;
 
                 CustomColor topRenderColor =
-                        mappedChunks.contains(new ChunkPos(x, z - 1).toLong()) ? CommonColors.GREEN : renderColor;
+                        mappedChunks.contains(new ChunkPos(x, z - 1).pack()) ? CommonColors.GREEN : renderColor;
                 CustomColor leftRenderColor =
-                        mappedChunks.contains(new ChunkPos(x - 1, z).toLong()) ? CommonColors.GREEN : renderColor;
+                        mappedChunks.contains(new ChunkPos(x - 1, z).pack()) ? CommonColors.GREEN : renderColor;
 
                 // Render the top and left borders of the chunk
                 RenderUtils.drawLine(guiGraphics, topRenderColor, x1, z1, x2, z1, CHUNK_LINE_WIDTH);
@@ -283,7 +283,7 @@ public final class MapRenderer {
                 if (x == bottomRight.x) {
                     // Check if the chunk on the right is mapped, if it is, render with the correct color
                     CustomColor rightRenderColor =
-                            mappedChunks.contains(new ChunkPos(x + 1, z).toLong()) ? CommonColors.GREEN : renderColor;
+                            mappedChunks.contains(new ChunkPos(x + 1, z).pack()) ? CommonColors.GREEN : renderColor;
 
                     RenderUtils.drawLine(guiGraphics, rightRenderColor, x2, z1, x2, z2, CHUNK_LINE_WIDTH);
                 }
@@ -292,7 +292,7 @@ public final class MapRenderer {
                 if (z == bottomRight.z) {
                     // Check if the chunk on the top is mapped, if it is, render with the correct color
                     CustomColor bottomRenderColor =
-                            mappedChunks.contains(new ChunkPos(x, z + 1).toLong()) ? CommonColors.GREEN : renderColor;
+                            mappedChunks.contains(new ChunkPos(x, z + 1).pack()) ? CommonColors.GREEN : renderColor;
 
                     RenderUtils.drawLine(guiGraphics, bottomRenderColor, x1, z2, x2, z2, CHUNK_LINE_WIDTH);
                 }

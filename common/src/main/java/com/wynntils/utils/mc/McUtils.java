@@ -89,7 +89,7 @@ public final class McUtils {
     }
 
     public static void setScreen(Screen screen) {
-        mc().setScreen(screen);
+        mc().setScreenAndShow(screen);
     }
 
     public static void playSoundUI(SoundEvent sound) {

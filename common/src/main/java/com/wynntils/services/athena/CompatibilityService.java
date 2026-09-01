@@ -91,7 +91,7 @@ public class CompatibilityService extends Service {
             toastExpire = 0L;
             warningToast = null;
 
-            McUtils.mc().setScreen(CompatibilityWarningScreen.create(compatibilityTier));
+            McUtils.mc().setScreenAndShow(CompatibilityWarningScreen.create(compatibilityTier));
         }
     }
 
@@ -152,7 +152,7 @@ public class CompatibilityService extends Service {
 
         if (compatibilityTier.shouldScreenPrompt() && !isCompatible()) {
             // This has to be done on the main thread
-            McUtils.mc().execute(() -> McUtils.mc().setScreen(CompatibilityWarningScreen.create(compatibilityTier)));
+            McUtils.mc().execute(() -> McUtils.mc().setScreenAndShow(CompatibilityWarningScreen.create(compatibilityTier)));
         }
     }
 }
