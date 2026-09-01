@@ -31,12 +31,12 @@ repositories {
 }
 
 dependencies {
-    modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+    implementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     // Resource loader needs base
-    include(modImplementation(fabricApi.module("fabric-api-base", fabric_version)))
-    include(modImplementation(fabricApi.module("fabric-resource-loader-v1", fabric_version)))
+    include(implementation(fabricApi.module("fabric-api-base", fabric_version)))
+    include(implementation(fabricApi.module("fabric-resource-loader-v1", fabric_version)))
 
-    modCompileOnly("maven.modrinth:modmenu:${modmenu_version}")
+    compileOnly("maven.modrinth:modmenu:${modmenu_version}")
 
     testImplementation(common(project(path: ":common", configuration: "namedElements"))) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
@@ -53,7 +53,7 @@ dependencies {
 
     include(implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:${mixinextras_version}")))
 
-    modRuntimeOnly "me.djtheredstoner:DevAuth-fabric:${devauth_version}"
+    runtimeOnly "me.djtheredstoner:DevAuth-fabric:${devauth_version}"
 
     testImplementation("net.fabricmc:fabric-loader-junit:${fabric_loader_version}")
     testImplementation("org.junit.jupiter:junit-jupiter:${junit_version}")
@@ -81,22 +81,21 @@ shadow {
     addShadowVariantIntoJavaComponent = false
 }
 
+// Minecraft is unobfuscated from 26.1, so there is no remapJar step; shadowJar is the final artifact.
 jar {
-    archiveClassifier = "dev"
+    archiveClassifier = "raw"
 }
 
 shadowJar {
+    dependsOn(jar)
+    mainSpec.sourcePaths.clear()
+    from(zipTree(jar.archiveFile))
+
     configurations = [
         project.configurations.shadowCommon,
         project.configurations.shadowImplementation
     ]
 
-    archiveClassifier = "dev-shadow"
-}
-
-remapJar {
-    injectAccessWidener = true
-    inputFile.set shadowJar.archiveFile
     archiveClassifier = "fabric+MC-${minecraft_version}"
 }
 
@@ -104,10 +103,7 @@ sourcesJar {
     def commonSources = project(":common").sourcesJar
     dependsOn commonSources
     from commonSources.archiveFile.map { zipTree(it) }
-}
-
-remapSourcesJar {
-    inputFile.set sourcesJar.archiveFile
-    dependsOn sourcesJar
     archiveClassifier = "fabric+MC-${minecraft_version}-sources"
 }
+
+assemble.dependsOn shadowJar
