@@ -28,8 +28,8 @@ dependencies {
     neoForge "net.neoforged:neoforge:${neoforge_version}"
     runtimeOnly "me.djtheredstoner:DevAuth-neoforge:${devauth_version}"
 
-    common(project(path: ":common", configuration: "namedElements")) { transitive false }
-    shadowCommon(project(path: ":common", configuration: "transformProductionNeoForge")) { transitive = false }
+    common(project(":common")) { transitive false }
+    shadowCommon(project(":common")) { transitive = false }
 
     // Hades Protocol
     include(forgeRuntimeLibrary("com.github.wynntils:hades:v${hades_version}"))

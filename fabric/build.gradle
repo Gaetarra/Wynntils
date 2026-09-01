@@ -38,8 +38,8 @@ dependencies {
 
     compileOnly("maven.modrinth:modmenu:${modmenu_version}")
 
-    testImplementation(common(project(path: ":common", configuration: "namedElements"))) { transitive false }
-    shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
+    testImplementation(common(project(":common"))) { transitive false }
+    shadowCommon(project(":common")) { transitive false }
 
     shadowImplementation("net.neoforged:bus:${neoforge_eventbus_version}") {
         exclude group: "org.ow2.asm"
