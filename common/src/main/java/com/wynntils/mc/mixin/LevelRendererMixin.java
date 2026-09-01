@@ -42,10 +42,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class LevelRendererMixin {
     @Shadow
     @Final
-    private Minecraft minecraft;
-
-    @Shadow
-    @Final
     public SubmitNodeStorage submitNodeStorage;
 
     @Shadow
@@ -73,7 +69,7 @@ public abstract class LevelRendererMixin {
             CallbackInfo ci) {
         // No PoseStack is provided here, as it'd be just an empty stack.
         MixinHelper.post(
-                new RenderLevelEvent.Post(this.minecraft.levelRenderer, deltaTracker, projectionMatrix, camera));
+                new RenderLevelEvent.Post((LevelRenderer) (Object) this, deltaTracker, projectionMatrix, camera));
     }
 
     @Inject(
@@ -93,7 +89,7 @@ public abstract class LevelRendererMixin {
             boolean renderSky,
             CallbackInfo ci) {
         MixinHelper.post(
-                new RenderLevelEvent.Pre(this.minecraft.levelRenderer, deltaTracker, projectionMatrix, camera));
+                new RenderLevelEvent.Pre((LevelRenderer) (Object) this, deltaTracker, projectionMatrix, camera));
     }
 
     @Inject(

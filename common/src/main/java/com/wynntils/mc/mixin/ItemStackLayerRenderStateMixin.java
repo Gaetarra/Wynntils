@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class ItemStackLayerRenderStateMixin {
     @Shadow
     @Final
-    private ItemStackRenderState field_55345;
+    private ItemStackRenderState this$0;
 
     @Inject(
             method =
@@ -39,9 +39,9 @@ public abstract class ItemStackLayerRenderStateMixin {
             int packedOverlay,
             int outlineColor,
             CallbackInfo ci) {
-        if (field_55345.displayContext != ItemDisplayContext.GROUND) return;
+        if (this$0.displayContext != ItemDisplayContext.GROUND) return;
 
-        if (field_55345 instanceof ItemStackRenderStateExtension extension) {
+        if (this$0 instanceof ItemStackRenderStateExtension extension) {
             if (extension.getItemStack() == null) return;
 
             MixinHelper.post(new GroundItemEntityTransformEvent(poseStack, extension.getItemStack()));
