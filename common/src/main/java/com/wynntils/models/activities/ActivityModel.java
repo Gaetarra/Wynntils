@@ -415,7 +415,7 @@ public final class ActivityModel extends Model {
         if (questInfo.nextLocation().isPresent()) {
             McUtils.player().closeContainer();
             McUtils.mc()
-                    .setScreen(MainMapScreen.create(
+                    .setScreenAndShow(MainMapScreen.create(
                             questInfo.nextLocation().get().x(),
                             questInfo.nextLocation().get().z()));
         }
@@ -427,7 +427,7 @@ public final class ActivityModel extends Model {
         if (caveInfo.getNextLocation().isPresent()) {
             McUtils.player().closeContainer();
             McUtils.mc()
-                    .setScreen(MainMapScreen.create(
+                    .setScreenAndShow(MainMapScreen.create(
                             caveInfo.getNextLocation().get().x(),
                             caveInfo.getNextLocation().get().z()));
         }
@@ -479,7 +479,7 @@ public final class ActivityModel extends Model {
             case MAP ->
                 Managers.TickScheduler.scheduleNextTick(() -> {
                     McUtils.player().closeContainer();
-                    McUtils.setScreen(MainMapScreen.create(x, z));
+                    McUtils.setScreenAndShow(MainMapScreen.create(x, z));
                 });
             case COMPASS -> {
                 McUtils.playSoundUI(SoundEvents.EXPERIENCE_ORB_PICKUP);

@@ -7,6 +7,7 @@ package com.wynntils.models.elements.type;
 import com.wynntils.utils.StringUtils;
 import com.wynntils.utils.colors.CustomColor;
 import java.util.Locale;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -69,7 +70,7 @@ public enum Powder {
     }
 
     public CustomColor getColor() {
-        return CustomColor.fromInt(this.lightColor.getColor()).withAlpha(255);
+        return CustomColor.fromInt(TextColor.fromLegacyFormat(this.lightColor).getValue()).withAlpha(255);
     }
 
     public Item getLowTierItem() {

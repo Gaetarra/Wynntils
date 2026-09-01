@@ -19,6 +19,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.ARGB;
@@ -30,13 +31,13 @@ import org.joml.Vector2d;
 
 public final class LootrunCompiler {
     private static final List<Integer> COLORS = List.of(
-            ChatFormatting.RED.getColor(),
-            ChatFormatting.GOLD.getColor(),
-            ChatFormatting.YELLOW.getColor(),
-            ChatFormatting.GREEN.getColor(),
-            ChatFormatting.BLUE.getColor(),
+            TextColor.fromLegacyFormat(ChatFormatting.RED).getValue(),
+            TextColor.fromLegacyFormat(ChatFormatting.GOLD).getValue(),
+            TextColor.fromLegacyFormat(ChatFormatting.YELLOW).getValue(),
+            TextColor.fromLegacyFormat(ChatFormatting.GREEN).getValue(),
+            TextColor.fromLegacyFormat(ChatFormatting.BLUE).getValue(),
             0x3f00ff,
-            ChatFormatting.DARK_PURPLE.getColor());
+            TextColor.fromLegacyFormat(ChatFormatting.DARK_PURPLE).getValue());
 
     public static LootrunPathInstance compile(UncompiledLootrunPath uncompiled, boolean recording) {
         Long2ObjectMap<List<ColoredPath>> points = generatePointsByChunk(uncompiled.path(), recording);

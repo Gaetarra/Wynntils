@@ -193,8 +193,8 @@ public final class McUtils {
                 keybindCommand.startsWith("/") ? ChatComponent.ChatMethod.COMMAND : ChatComponent.ChatMethod.MESSAGE;
 
         // Route through ChatComponent so the existing createScreen mixin can post ChatScreenCreateEvent.
-        mc().gui.getChat().saveAsDraft(keybindCommand);
-        mc().gui.getChat().openScreen(chatMethod, ChatScreen::new);
+        mc().gui.hud.getChat().saveAsDraft(keybindCommand);
+        mc().gui.hud.getChat().openScreen(chatMethod, ChatScreen::new);
     }
 
     public static void displayToast(Component title, Component message, long displayTimeMs) {

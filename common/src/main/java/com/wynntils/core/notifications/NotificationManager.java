@@ -136,9 +136,9 @@ public final class NotificationManager extends Manager {
             McUtils.removeMessageFromChat(oldMessage);
         }
         McUtils.mc()
-                .gui
+                .gui.hud
                 .getChat()
-                .addMessage(msgContainer.getRenderTask().getText().getComponent());
+                .addClientSystemMessage(msgContainer.getRenderTask().getText().getComponent());
     }
 
     private static boolean shouldSendToChat() {
