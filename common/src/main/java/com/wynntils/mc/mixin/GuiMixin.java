@@ -154,7 +154,7 @@ public abstract class GuiMixin {
 
     @Inject(
             method =
-                    "renderScoreboardSidebar(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/client/DeltaTracker;)V",
+                    "extractScoreboardSidebar(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/client/DeltaTracker;)V",
             at = @At("HEAD"),
             cancellable = true)
     private void onRenderScoreboardSidebarPre(GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker, CallbackInfo ci) {

@@ -72,7 +72,7 @@ public abstract class GuiGraphicsMixin {
 
     @ModifyVariable(
             method =
-                    "renderItemCount(Lnet/minecraft/client/gui/Font;Lnet/minecraft/world/item/ItemStack;IILjava/lang/String;)V",
+                    "itemCount(Lnet/minecraft/client/gui/Font;Lnet/minecraft/world/item/ItemStack;IILjava/lang/String;)V",
             at = @At("HEAD"),
             ordinal = 0,
             argsOnly = true)
@@ -100,7 +100,7 @@ public abstract class GuiGraphicsMixin {
     }
 
     @Inject(
-            method = "renderItemCooldown(Lnet/minecraft/world/item/ItemStack;II)V",
+            method = "itemCooldown(Lnet/minecraft/world/item/ItemStack;II)V",
             at =
                     @At(
                             value = "INVOKE",
@@ -118,7 +118,7 @@ public abstract class GuiGraphicsMixin {
 
     @WrapOperation(
             method =
-                    "renderItemCount(Lnet/minecraft/client/gui/Font;Lnet/minecraft/world/item/ItemStack;IILjava/lang/String;)V",
+                    "itemCount(Lnet/minecraft/client/gui/Font;Lnet/minecraft/world/item/ItemStack;IILjava/lang/String;)V",
             at =
                     @At(
                             value = "INVOKE",

@@ -15,6 +15,14 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
+/*
+ * NOT REGISTERED in wynntils.mixins.json on 26.2.
+ *
+ * NameTagFeatureRenderer.Storage became the Submit record and its add(...) method is gone;
+ * nametag drawing moved into buildGroup/prepareText, so neither the background opacity nor the
+ * scale call site this hooked still exists. The nametag background opacity and scale options are
+ * therefore inert until this is reworked against the new feature renderer flow.
+ */
 @Mixin(NameTagFeatureRenderer.Submit.class)
 public class NameTagFeatureRendererStorageMixin {
     @ModifyArg(

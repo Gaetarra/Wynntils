@@ -59,7 +59,7 @@ public abstract class MultiPlayerGameModeMixin {
 
     @Inject(
             method =
-                    "handleInventoryMouseClick(IIILnet/minecraft/world/inventory/ContainerInput;Lnet/minecraft/world/entity/player/Player;)V",
+                    "handleContainerInput(IIILnet/minecraft/world/inventory/ContainerInput;Lnet/minecraft/world/entity/player/Player;)V",
             at = @At("HEAD"),
             cancellable = true)
     private void handleInventoryMouseClickPre(
@@ -108,7 +108,7 @@ public abstract class MultiPlayerGameModeMixin {
 
     @Inject(
             method =
-                    "interactAt(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/EntityHitResult;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResult;",
+                    "interact(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/EntityHitResult;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResult;",
             at = @At("HEAD"),
             cancellable = true)
     private void interactAt(
