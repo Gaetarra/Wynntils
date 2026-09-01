@@ -85,7 +85,7 @@ public final class McUtils {
     }
 
     public static Screen screen() {
-        return mc().screen;
+        return mc().gui.screen();
     }
 
     public static void setScreen(Screen screen) {

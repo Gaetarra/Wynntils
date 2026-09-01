@@ -91,7 +91,7 @@ public abstract class GuiMixin {
             method = "render(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/client/DeltaTracker;)V",
             at = @At("HEAD"))
     private void onRenderGuiPre(GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker, CallbackInfo ci) {
-        if (this.minecraft.screen instanceof LevelLoadingScreen) return;
+        if (this.minecraft.gui.screen() instanceof LevelLoadingScreen) return;
         if (McUtils.options().hideGui) return;
         MixinHelper.post(
                 new RenderEvent.Pre(guiGraphics, deltaTracker, this.minecraft.getWindow(), RenderElementType.GUI_PRE));
@@ -101,7 +101,7 @@ public abstract class GuiMixin {
             method = "render(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/client/DeltaTracker;)V",
             at = @At("RETURN"))
     private void onRenderGuiPost(GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker, CallbackInfo ci) {
-        if (this.minecraft.screen instanceof LevelLoadingScreen) return;
+        if (this.minecraft.gui.screen() instanceof LevelLoadingScreen) return;
         if (McUtils.options().hideGui) return;
         MixinHelper.post(new RenderEvent.Post(
                 guiGraphics, deltaTracker, this.minecraft.getWindow(), RenderElementType.GUI_POST));

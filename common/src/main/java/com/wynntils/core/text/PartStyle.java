@@ -26,7 +26,10 @@ public final class PartStyle {
             .filter(ChatFormatting::isColor)
             .collect(
                     () -> new Int2ObjectOpenHashMap<>(ChatFormatting.values().length),
-                    (map, cf) -> map.put(cf.getColor() | 0xFF000000, cf),
+                    (map, cf) -> {
+                        TextColor legacyColor = TextColor.fromLegacyFormat(cf);
+                        if (legacyColor != null) map.put(legacyColor.getValue() | 0xFF000000, cf);
+                    },
                     Int2ObjectMap::putAll);
 
     private final StyledTextPart owner;

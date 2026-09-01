@@ -39,7 +39,7 @@ public class MappingProgressFeature extends Feature {
 
     @SubscribeEvent
     public void onChunkLoaded(ChunkReceivedEvent event) {
-        mappedChunks.get().add(ChunkPos.asLong(event.getChunkX(), event.getChunkZ()));
+        mappedChunks.get().add(ChunkPos.pack(event.getChunkX(), event.getChunkZ()));
         mappedChunks.touched();
     }
 
