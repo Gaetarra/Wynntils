@@ -125,13 +125,20 @@ public abstract class MultiPlayerGameModeMixin {
         }
     }
 
+    // 26.2 merged interactAt into interact: the single remaining method both sends the interact-at
+    // packet and calls Player#interactOn, so both events are posted from that one call site. Mixin
+    // returns as soon as a HEAD callback cancels, so Interact is skipped if InteractAt cancelled.
     @Inject(
             method =
-                    "interact(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResult;",
+                    "interact(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/EntityHitResult;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResult;",
             at = @At("HEAD"),
             cancellable = true)
     private void interact(
-            Player player, Entity target, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
+            Player player,
+            Entity target,
+            EntityHitResult ray,
+            InteractionHand hand,
+            CallbackInfoReturnable<InteractionResult> cir) {
         PlayerInteractEvent.Interact event = new PlayerInteractEvent.Interact(player, hand, target);
         MixinHelper.post(event);
         if (event.isCanceled()) {
