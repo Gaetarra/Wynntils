@@ -37,7 +37,7 @@ public class ItemFilterUIButton extends WynntilsButton {
     @Override
     public void onPress(InputWithModifiers input) {
         McUtils.mc()
-                .setScreen(
+                .setScreenAndShow(
                         ItemFilterScreen.create(searchWidget, previousScreen, supportsSorting, supportedProviderTypes));
     }
 }

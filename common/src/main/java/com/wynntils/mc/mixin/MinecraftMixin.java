@@ -38,7 +38,7 @@ public abstract class MinecraftMixin implements MinecraftExtension {
     @Unique
     private RenderTarget wynntils_overridenRenderTarget;
 
-    @Inject(method = "setScreen(Lnet/minecraft/client/gui/screens/Screen;)V", at = @At("RETURN"))
+    @Inject(method = "setScreenAndShow(Lnet/minecraft/client/gui/screens/Screen;)V", at = @At("RETURN"))
     private void setScreenPost(Screen screen, CallbackInfo ci, @Share("oldScreen") LocalRef<Screen> oldScreen) {
         Event event = (screen == null)
                 ? new ScreenClosedEvent.Post(oldScreen.get())
@@ -46,9 +46,9 @@ public abstract class MinecraftMixin implements MinecraftExtension {
         MixinHelper.post(event);
     }
 
-    @Inject(method = "setScreen(Lnet/minecraft/client/gui/screens/Screen;)V", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "setScreenAndShow(Lnet/minecraft/client/gui/screens/Screen;)V", at = @At("HEAD"), cancellable = true)
     private void setScreenPre(Screen screen, CallbackInfo ci, @Share("oldScreen") LocalRef<Screen> oldScreen) {
-        oldScreen.set(((Minecraft) (Object) this).screen);
+        oldScreen.set(((Minecraft) (Object) this).gui.screen());
 
         // "var" is needed since there is no specific enough common supertype between ScreenOpenedEvent.Pre and
         // ScreenClosedEvent.Pre

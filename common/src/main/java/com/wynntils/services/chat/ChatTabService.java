@@ -202,7 +202,7 @@ public final class ChatTabService extends Service {
 
     void addMessage(Component component, MessageSignature headerSignature, GuiMessageTag tag) {
         try {
-            vanillaChatComponent.addClientSystemMessage(component, headerSignature, tag);
+            vanillaChatComponent.addPlayerMessage(component, headerSignature, tag);
 
             StyledText styledText = StyledText.fromComponent(component);
             RecipientType recipientType = Handlers.Chat.getRecipientType(styledText);

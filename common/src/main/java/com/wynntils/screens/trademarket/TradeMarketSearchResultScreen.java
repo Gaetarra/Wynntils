@@ -193,7 +193,7 @@ public class TradeMarketSearchResultScreen extends WynntilsContainerScreen<Chest
     }
 
     @Override
-    protected void renderBg(GuiGraphicsExtractor guiGraphics, float partialTick, int mouseX, int mouseY) {
+    public void extractContents(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
 
@@ -223,6 +223,8 @@ public class TradeMarketSearchResultScreen extends WynntilsContainerScreen<Chest
         // Sidebar
         RenderUtils.drawTexturedRect(
                 guiGraphics, Texture.CONTAINER_SIDEBAR, x - Texture.CONTAINER_SIDEBAR.width() + 7, y);
+
+        super.extractContents(guiGraphics, mouseX, mouseY, partialTick);
     }
 
     private void renderScrollButton(GuiGraphicsExtractor guiGraphics) {

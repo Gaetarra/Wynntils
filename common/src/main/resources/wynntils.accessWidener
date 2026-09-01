@@ -36,6 +36,7 @@ accessible field net/minecraft/client/gui/screens/Screen narratables Ljava/util/
 accessible field net/minecraft/client/gui/screens/Screen renderables Ljava/util/List;
 accessible field net/minecraft/client/gui/screens/inventory/AbstractContainerScreen hoveredSlot Lnet/minecraft/world/inventory/Slot;
 accessible field net/minecraft/client/gui/screens/inventory/AbstractContainerScreen imageHeight I
+mutable field net/minecraft/client/gui/screens/inventory/AbstractContainerScreen imageHeight I
 accessible field net/minecraft/client/gui/screens/inventory/AbstractContainerScreen imageWidth I
 accessible field net/minecraft/client/gui/screens/inventory/AbstractContainerScreen inventoryLabelX I
 accessible field net/minecraft/client/gui/screens/inventory/AbstractContainerScreen inventoryLabelY I
@@ -100,4 +101,3 @@ mutable field net/minecraft/network/protocol/game/ClientboundBossEventPacket$Upd
 mutable field net/minecraft/world/scores/Scoreboard playerScores Ljava/util/Map;
 # For testing
 accessible method net/minecraft/client/resources/language/ClientLanguage <init> (Ljava/util/Map;Z)V
-accessible method net/minecraft/client/resources/language/I18n setLanguage (Lnet/minecraft/locale/Language;)V

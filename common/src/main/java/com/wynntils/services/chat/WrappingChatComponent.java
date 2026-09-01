@@ -22,7 +22,7 @@ public class WrappingChatComponent extends ChatComponent {
     }
 
     @Override
-    public void addMessage(Component component, MessageSignature headerSignature, GuiMessageTag tag) {
-        Services.ChatTab.addClientSystemMessage(component, headerSignature, tag);
+    public void addPlayerMessage(Component component, MessageSignature headerSignature, GuiMessageTag tag) {
+        Services.ChatTab.addMessage(component, headerSignature, tag);
     }
 }
