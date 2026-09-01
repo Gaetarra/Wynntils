@@ -75,6 +75,10 @@ processResources {
     filesMatching("fabric.mod.json") {
         expand replaceProperties
     }
+
+    // fabric.mod.json declares the access widener, so it has to sit at this mod's resource root.
+    // The shipped jar gets it via shadowCommon, but tests run against loose classes.
+    from(project(":common").file("src/main/resources/wynntils.accessWidener"))
 }
 
 shadow {
