@@ -41,6 +41,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.ContainerScreen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -222,7 +223,7 @@ public class MainMapFeature extends Feature implements ExternalConfigurationScre
     }
 
     private void handleEntity(Entity entity) {
-        if (entity != null && entity.getType() == EntityType.INTERACTION) {
+        if (entity != null && entity.getType() == EntityTypes.INTERACTION) {
             // We don't actually know if this is a chest, but it's a good enough guess.
             lastChestPos = entity.blockPosition();
         }

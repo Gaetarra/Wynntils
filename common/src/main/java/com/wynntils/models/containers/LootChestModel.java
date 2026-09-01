@@ -39,6 +39,7 @@ import java.util.Optional;
 import java.util.TreeMap;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
@@ -107,7 +108,7 @@ public final class LootChestModel extends Model {
     @SubscribeEvent
     public void onRightClick(PlayerInteractEvent.InteractAt event) {
         Entity entity = event.getEntityHitResult().getEntity();
-        if (entity != null && entity.getType() == EntityType.SLIME) {
+        if (entity != null && entity.getType() == EntityTypes.SLIME) {
             // We don't actually know if this is a chest, but it's a good enough guess.
             lastChestPos = entity.blockPosition();
         }
