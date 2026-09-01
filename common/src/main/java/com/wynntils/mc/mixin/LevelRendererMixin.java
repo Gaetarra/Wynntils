@@ -111,33 +111,14 @@ public abstract class LevelRendererMixin {
         this.lastDeltaTracker = deltaTracker;
     }
 
-    @Inject(
-            method = "lambda$addMainPass$0", // framepass.executes lambda inside the addMainPass method
-            at =
-                    @At(
-                            value = "INVOKE",
-                            target =
-                                    "Lnet/minecraft/client/renderer/LevelRenderer;checkPoseStack(Lcom/mojang/blaze3d/vertex/PoseStack;)V",
-                            ordinal = 1))
-    private void renderTilePost(
-            GpuBufferSlice shaderFog,
-            LevelRenderState renderState,
-            ProfilerFiller profiler,
-            Matrix4f frustumMatrix,
-            ResourceHandle<RenderTarget> mainResourceHandle,
-            ResourceHandle<RenderTarget> translucentResourceHandle,
-            boolean renderBlockOutline,
-            ResourceHandle<RenderTarget> itemEntityResourceHandle,
-            ResourceHandle<RenderTarget> entityOutlineResourceHandle,
-            CallbackInfo ci,
-            @Local PoseStack poseStack) {
-        MixinHelper.post(new RenderTileLevelLastEvent(
-                (LevelRenderer) (Object) this,
-                poseStack,
-                this.submitNodeStorage,
-                this.lastDeltaTracker,
-                this.levelRenderState.cameraRenderState));
-    }
+    /*
+     * DISABLED on 26.2: this fired RenderTileLevelLastEvent after the second checkPoseStack call
+     * inside the addMainPass lambda. That call no longer exists and the lambda's parameters have
+     * changed, so there is no equivalent injection point to move it to without verifying in game.
+     *
+     * Consequence: world-space "render last" drawing (lootrun paths, in-world markers) does not
+     * run. Restore once a correct injection point in the new frame-graph flow is identified.
+     */
 
     @WrapWithCondition(
             method =
