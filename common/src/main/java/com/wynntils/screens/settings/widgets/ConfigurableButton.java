@@ -156,9 +156,9 @@ public class ConfigurableButton extends WynntilsButton {
                         VerticalAlignment.TOP,
                         TextShadow.NORMAL,
                         1f);
-        enabledCheckbox.render(guiGraphics, mouseX, mouseY, partialTick);
+        enabledCheckbox.extractRenderState(guiGraphics, mouseX, mouseY, partialTick);
         ecsButton.ifPresent(
-                basicHoverableButton -> basicHoverableButton.render(guiGraphics, mouseX, mouseY, partialTick));
+                basicHoverableButton -> basicHoverableButton.extractRenderState(guiGraphics, mouseX, mouseY, partialTick));
 
         if (isHovered) {
             if (enabledCheckbox.isHovered()) {

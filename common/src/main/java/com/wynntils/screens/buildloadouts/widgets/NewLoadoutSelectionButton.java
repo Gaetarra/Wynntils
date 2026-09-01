@@ -45,7 +45,7 @@ public class NewLoadoutSelectionButton extends AbstractWidget implements IconRen
     }
 
     @Override
-    protected void renderWidget(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
+    protected void extractWidgetRenderState(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
         handleCursor(guiGraphics);
         if (parent.getNewLoadoutType() != loadoutType) {
             RenderUtils.drawNineSliceScalingTexturedRect(

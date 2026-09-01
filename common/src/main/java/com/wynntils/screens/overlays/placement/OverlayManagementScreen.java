@@ -256,7 +256,7 @@ public final class OverlayManagementScreen extends WynntilsScreen {
 
         // Render widgets
         for (Renderable renderable : this.renderables) {
-            renderable.render(guiGraphics, mouseX, mouseY, partialTick);
+            renderable.extractRenderState(guiGraphics, mouseX, mouseY, partialTick);
         }
     }
 

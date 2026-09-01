@@ -40,7 +40,7 @@ public class AttackSpeedFilterWidget extends GuideFilterWidget {
     }
 
     @Override
-    protected void renderWidget(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
+    protected void extractWidgetRenderState(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
         FontRenderer.getInstance()
                 .renderText(
                         guiGraphics,
@@ -53,7 +53,7 @@ public class AttackSpeedFilterWidget extends GuideFilterWidget {
                         VerticalAlignment.TOP,
                         TextShadow.NORMAL);
 
-        attackSpeedCheckboxes.forEach(widget -> widget.render(guiGraphics, mouseX, mouseY, partialTick));
+        attackSpeedCheckboxes.forEach(widget -> widget.extractRenderState(guiGraphics, mouseX, mouseY, partialTick));
     }
 
     @Override
