@@ -53,7 +53,12 @@ public abstract class ItemTooltipRenderEvent extends Event {
     public static class Pre extends ItemTooltipRenderEvent implements ICancellableEvent {
         private List<Component> tooltips;
 
-        public Pre(GuiGraphicsExtractor guiGraphics, ItemStack itemStack, List<Component> tooltips, int mouseX, int mouseY) {
+        public Pre(
+                GuiGraphicsExtractor guiGraphics,
+                ItemStack itemStack,
+                List<Component> tooltips,
+                int mouseX,
+                int mouseY) {
             super(guiGraphics, itemStack, mouseX, mouseY);
             setTooltips(tooltips);
         }

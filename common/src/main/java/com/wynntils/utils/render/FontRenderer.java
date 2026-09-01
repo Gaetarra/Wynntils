@@ -708,7 +708,8 @@ public final class FontRenderer {
                 line.getSetting().shadow());
     }
 
-    private void renderTexts(GuiGraphicsExtractor guiGraphics, float x, float y, List<TextRenderTask> lines, float textScale) {
+    private void renderTexts(
+            GuiGraphicsExtractor guiGraphics, float x, float y, List<TextRenderTask> lines, float textScale) {
         float currentY = y;
         for (TextRenderTask line : lines) {
             renderText(guiGraphics, x, currentY, line, textScale);

@@ -582,7 +582,8 @@ public class TerritoryManagementScreen extends AbstractMapScreen implements Wrap
                 renderY - Texture.SCROLLBAR_BUTTON.height() / 2f);
     }
 
-    private void renderQuickFiltersAndSorts(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
+    private void renderQuickFiltersAndSorts(
+            GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
         int xOffset = getRenderX() + Texture.TERRITORY_MANAGEMENT_BACKGROUND.width() + 5;
 
         RenderUtils.drawRect(

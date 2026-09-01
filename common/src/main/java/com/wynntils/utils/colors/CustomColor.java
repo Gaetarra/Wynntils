@@ -21,8 +21,8 @@ import java.util.random.RandomGenerator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.CRC32;
-import net.minecraft.network.chat.TextColor;
 import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TextColor;
 
 public record CustomColor(int r, int g, int b, int a) {
     public static final CustomColor NONE = new CustomColor(-1, -1, -1, -1);

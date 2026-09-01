@@ -19,9 +19,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import net.minecraft.network.chat.TextColor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.BoundedFloatFunction;
 import net.minecraft.util.CubicSpline;
@@ -277,7 +277,8 @@ public final class LootrunCompiler {
     private static Long2ObjectMap<Set<BlockPos>> getChests(Set<BlockPos> chests) {
         Long2ObjectMap<Set<BlockPos>> result = new Long2ObjectOpenHashMap<>();
         for (BlockPos pos : chests) {
-            Set<BlockPos> addTo = result.computeIfAbsent(ChunkPos.containing(pos).pack(), (chunk) -> new HashSet<>());
+            Set<BlockPos> addTo =
+                    result.computeIfAbsent(ChunkPos.containing(pos).pack(), (chunk) -> new HashSet<>());
             addTo.add(pos);
         }
         return result;

@@ -61,7 +61,8 @@ public class LoadoutMenuItemWidget extends AbstractWidget implements ItemTooltip
     }
 
     @Override
-    protected void extractWidgetRenderState(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
+    protected void extractWidgetRenderState(
+            GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
         RenderUtils.drawNineSliceScalingTexturedRect(
                 guiGraphics, Texture.BUILD_LOADOUTS_WIDGET_BACKGROUND_LIGHT, x, y, this.width, this.height);
 
@@ -116,7 +117,8 @@ public class LoadoutMenuItemWidget extends AbstractWidget implements ItemTooltip
         return new int[] {bx, by};
     }
 
-    private void renderBoxItem(GuiGraphicsExtractor guiGraphics, List<ItemStack> boxItemStacks, int index, int bx, int by) {
+    private void renderBoxItem(
+            GuiGraphicsExtractor guiGraphics, List<ItemStack> boxItemStacks, int index, int bx, int by) {
         ItemStack itemStack = index < boxItemStacks.size() ? boxItemStacks.get(index) : ItemStack.EMPTY;
 
         if (itemStack.isEmpty()) {

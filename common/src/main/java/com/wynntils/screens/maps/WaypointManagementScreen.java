@@ -443,7 +443,8 @@ public final class WaypointManagementScreen extends WynntilsScreen {
         } else {
             RenderUtils.enableScissor(
                     guiGraphics, (int) (getTranslationX() + 10), (int) (getTranslationY() + 16), 322, 181);
-            waypointManagerWidgets.forEach(widget -> widget.extractRenderState(guiGraphics, mouseX, mouseY, partialTick));
+            waypointManagerWidgets.forEach(
+                    widget -> widget.extractRenderState(guiGraphics, mouseX, mouseY, partialTick));
             RenderUtils.disableScissor(guiGraphics);
         }
 

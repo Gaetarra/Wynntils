@@ -199,7 +199,8 @@ public final class McUtils {
 
     public static void displayToast(Component title, Component message, long displayTimeMs) {
         McUtils.mc()
-                .gui.toastManager()
+                .gui
+                .toastManager()
                 .addToast(new SystemToast(new SystemToast.SystemToastId(displayTimeMs), title, message));
     }
 }

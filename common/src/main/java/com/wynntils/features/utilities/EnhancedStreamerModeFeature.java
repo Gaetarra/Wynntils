@@ -112,7 +112,8 @@ public class EnhancedStreamerModeFeature extends Feature {
         event.setTooltips(List.of(Component.translatable("feature.wynntils.enhancedStreamerMode.tooltipHidden")));
     }
 
-    private void handleWeapon(ICancellableEvent event, ItemStack itemStack, GuiGraphicsExtractor guiGraphics, int x, int y) {
+    private void handleWeapon(
+            ICancellableEvent event, ItemStack itemStack, GuiGraphicsExtractor guiGraphics, int x, int y) {
         Optional<GearTypeItemProperty> gearItemOpt =
                 Models.Item.asWynnItemProperty(itemStack, GearTypeItemProperty.class);
         if (gearItemOpt.isEmpty()) return;

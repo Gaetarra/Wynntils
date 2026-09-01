@@ -645,7 +645,8 @@ public class MinimapOverlay extends Overlay {
                         new TextRenderTask("W", TextRenderSetting.CENTERED));
     }
 
-    private void renderMapBorder(GuiGraphicsExtractor guiGraphics, float renderX, float renderY, float width, float height) {
+    private void renderMapBorder(
+            GuiGraphicsExtractor guiGraphics, float renderX, float renderY, float width, float height) {
         Texture texture = borderType.get().texture();
         int grooves = borderType.get().groovesSize();
         BorderInfo borderInfo = maskType.get() == MapMaskType.CIRCLE

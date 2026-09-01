@@ -247,10 +247,10 @@ public final class MapRenderer {
             float mapCenterZ,
             float centerZ,
             float zoomRenderScale) {
-        ChunkPos topLeft =
-                ChunkPos.containing(new BlockPos((int) renderedWorldBoundingBox.x1(), 0, (int) renderedWorldBoundingBox.z1()));
-        ChunkPos bottomRight =
-                ChunkPos.containing(new BlockPos((int) renderedWorldBoundingBox.x2(), 0, (int) renderedWorldBoundingBox.z2()));
+        ChunkPos topLeft = ChunkPos.containing(
+                new BlockPos((int) renderedWorldBoundingBox.x1(), 0, (int) renderedWorldBoundingBox.z1()));
+        ChunkPos bottomRight = ChunkPos.containing(
+                new BlockPos((int) renderedWorldBoundingBox.x2(), 0, (int) renderedWorldBoundingBox.z2()));
 
         // Render the chunk grid, with a 1px border around each chunk.
         for (int x = topLeft.x; x <= bottomRight.x; x++) {

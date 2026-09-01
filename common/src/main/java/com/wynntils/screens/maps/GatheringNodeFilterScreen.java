@@ -205,7 +205,8 @@ public final class GatheringNodeFilterScreen extends WynntilsScreen {
         } else {
             RenderUtils.enableScissor(
                     guiGraphics, (int) (getTranslationX() + 10), (int) (getTranslationY() + 16), 322, 181);
-            gatheringNodeFilterWidgets.forEach(widget -> widget.extractRenderState(guiGraphics, mouseX, mouseY, partialTick));
+            gatheringNodeFilterWidgets.forEach(
+                    widget -> widget.extractRenderState(guiGraphics, mouseX, mouseY, partialTick));
             RenderUtils.disableScissor(guiGraphics);
         }
 

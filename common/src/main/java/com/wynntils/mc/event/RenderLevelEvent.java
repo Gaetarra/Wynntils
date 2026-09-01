@@ -1,12 +1,12 @@
 /*
- * Copyright © Wynntils 2022-2024.
+ * Copyright © Wynntils 2022-2026.
  * This file is released under LGPLv3. See LICENSE for full license details.
  */
 package com.wynntils.mc.event;
 
-import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.renderer.LevelRenderer;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.neoforged.bus.api.Event;
 import org.joml.Matrix4fc;
 
@@ -18,7 +18,10 @@ public abstract class RenderLevelEvent extends Event {
     private final CameraRenderState camera;
 
     protected RenderLevelEvent(
-            LevelRenderer levelRenderer, DeltaTracker deltaTracker, Matrix4fc projectionMatrix, CameraRenderState camera) {
+            LevelRenderer levelRenderer,
+            DeltaTracker deltaTracker,
+            Matrix4fc projectionMatrix,
+            CameraRenderState camera) {
         this.levelRenderer = levelRenderer;
         this.deltaTracker = deltaTracker;
         this.projectionMatrix = projectionMatrix;
@@ -42,13 +45,21 @@ public abstract class RenderLevelEvent extends Event {
     }
 
     public static class Pre extends RenderLevelEvent {
-        public Pre(LevelRenderer levelRenderer, DeltaTracker deltaTracker, Matrix4fc projectionMatrix, CameraRenderState camera) {
+        public Pre(
+                LevelRenderer levelRenderer,
+                DeltaTracker deltaTracker,
+                Matrix4fc projectionMatrix,
+                CameraRenderState camera) {
             super(levelRenderer, deltaTracker, projectionMatrix, camera);
         }
     }
 
     public static class Post extends RenderLevelEvent {
-        public Post(LevelRenderer levelRenderer, DeltaTracker deltaTracker, Matrix4fc projectionMatrix, CameraRenderState camera) {
+        public Post(
+                LevelRenderer levelRenderer,
+                DeltaTracker deltaTracker,
+                Matrix4fc projectionMatrix,
+                CameraRenderState camera) {
             super(levelRenderer, deltaTracker, projectionMatrix, camera);
         }
     }

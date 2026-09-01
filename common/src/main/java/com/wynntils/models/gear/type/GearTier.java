@@ -10,9 +10,9 @@ import com.wynntils.utils.colors.CustomColor;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Optional;
-import net.minecraft.network.chat.TextColor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.Identifier;
 
 public enum GearTier {

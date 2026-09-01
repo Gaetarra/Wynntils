@@ -287,8 +287,8 @@ public class ChatItemFeature extends Feature {
         }
 
         ItemStack itemStack = buildChatHoverItemStack(wynnItem);
-        style = style.withHoverEvent(new HoverEvent.ShowItem(new ItemStackTemplate(
-                itemStack.typeHolder(), itemStack.getCount(), itemStack.getComponentsPatch())));
+        style = style.withHoverEvent(new HoverEvent.ShowItem(
+                new ItemStackTemplate(itemStack.typeHolder(), itemStack.getCount(), itemStack.getComponentsPatch())));
 
         // Add the item name
         StyledText appendedNameText =

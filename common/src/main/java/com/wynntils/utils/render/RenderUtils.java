@@ -30,7 +30,6 @@ import java.util.Optional;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.render.TextureSetup;
-import net.minecraft.client.renderer.state.gui.GuiItemRenderState;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPositioner;
@@ -39,6 +38,7 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.item.TrackingItemStackRenderState;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.state.gui.GuiItemRenderState;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.AbstractTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
@@ -96,7 +96,13 @@ public final class RenderUtils {
     }
 
     public static void drawRectBorders(
-            GuiGraphicsExtractor guiGraphics, CustomColor color, float x1, float y1, float x2, float y2, float lineWidth) {
+            GuiGraphicsExtractor guiGraphics,
+            CustomColor color,
+            float x1,
+            float y1,
+            float x2,
+            float y2,
+            float lineWidth) {
         drawLine(guiGraphics, color, x1, y1, x2, y1, lineWidth);
         drawLine(guiGraphics, color, x2, y1, x2, y2, lineWidth);
         drawLine(guiGraphics, color, x2, y2, x1, y2, lineWidth);
@@ -190,7 +196,8 @@ public final class RenderUtils {
         }
     }
 
-    public static void fill(GuiGraphicsExtractor guiGraphics, CustomColor color, float x1, float y1, float x2, float y2) {
+    public static void fill(
+            GuiGraphicsExtractor guiGraphics, CustomColor color, float x1, float y1, float x2, float y2) {
         if (x1 > x2) {
             float t = x1;
             x1 = x2;
@@ -350,7 +357,8 @@ public final class RenderUtils {
                 texture.height());
     }
 
-    public static void drawSprite(GuiGraphicsExtractor guiGraphics, Texture texture, CustomColor color, float x, float y) {
+    public static void drawSprite(
+            GuiGraphicsExtractor guiGraphics, Texture texture, CustomColor color, float x, float y) {
         drawSprite(
                 guiGraphics,
                 RenderPipelines.GUI_TEXTURED,
@@ -378,7 +386,13 @@ public final class RenderUtils {
     }
 
     public static void drawSprite(
-            GuiGraphicsExtractor guiGraphics, Texture texture, CustomColor color, float x, float y, float width, float height) {
+            GuiGraphicsExtractor guiGraphics,
+            Texture texture,
+            CustomColor color,
+            float x,
+            float y,
+            float width,
+            float height) {
         drawSprite(
                 guiGraphics,
                 RenderPipelines.GUI_TEXTURED,
@@ -474,7 +488,8 @@ public final class RenderUtils {
                 texture.height());
     }
 
-    public static void drawTexturedRect(GuiGraphicsExtractor guiGraphics, Texture texture, CustomColor color, float x, float y) {
+    public static void drawTexturedRect(
+            GuiGraphicsExtractor guiGraphics, Texture texture, CustomColor color, float x, float y) {
         drawTexturedRect(
                 guiGraphics,
                 texture,
@@ -547,7 +562,13 @@ public final class RenderUtils {
     }
 
     public static void drawScalingTexturedRect(
-            GuiGraphicsExtractor guiGraphics, Texture texture, CustomColor color, float x, float y, float width, float height) {
+            GuiGraphicsExtractor guiGraphics,
+            Texture texture,
+            CustomColor color,
+            float x,
+            float y,
+            float width,
+            float height) {
         drawScalingTexturedRect(
                 guiGraphics, texture.identifier(), color, x, y, width, height, texture.width(), texture.height());
     }
@@ -1265,7 +1286,8 @@ public final class RenderUtils {
         guiGraphics.pose().popMatrix();
     }
 
-    public static void renderTooltip(GuiGraphicsExtractor guiGraphics, List<Component> tooltipLines, int mouseX, int mouseY) {
+    public static void renderTooltip(
+            GuiGraphicsExtractor guiGraphics, List<Component> tooltipLines, int mouseX, int mouseY) {
         renderTooltip(
                 guiGraphics, FontRenderer.getInstance().getFont(), tooltipLines, Optional.empty(), mouseX, mouseY);
     }

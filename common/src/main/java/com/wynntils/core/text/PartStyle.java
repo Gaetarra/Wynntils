@@ -152,7 +152,9 @@ public final class PartStyle {
                 styleString.append(differenceString);
                 skipFormatting = true;
             } else {
-                styleString.append(STYLE_PREFIX).append(ChatFormatting.RESET.toString().charAt(1));
+                styleString
+                        .append(STYLE_PREFIX)
+                        .append(ChatFormatting.RESET.toString().charAt(1));
             }
         }
 
@@ -162,7 +164,9 @@ public final class PartStyle {
                 ChatFormatting chatFormatting = INTEGER_TO_CHATFORMATTING_MAP.get(color.asInt());
 
                 if (chatFormatting != null) {
-                    styleString.append(STYLE_PREFIX).append(chatFormatting.toString().charAt(1));
+                    styleString
+                            .append(STYLE_PREFIX)
+                            .append(chatFormatting.toString().charAt(1));
                 } else {
                     styleString.append(STYLE_PREFIX).append(color.toHexString());
                 }
@@ -177,19 +181,29 @@ public final class PartStyle {
 
             // 2. Formatting
             if (obfuscated) {
-                styleString.append(STYLE_PREFIX).append(ChatFormatting.OBFUSCATED.toString().charAt(1));
+                styleString
+                        .append(STYLE_PREFIX)
+                        .append(ChatFormatting.OBFUSCATED.toString().charAt(1));
             }
             if (bold) {
-                styleString.append(STYLE_PREFIX).append(ChatFormatting.BOLD.toString().charAt(1));
+                styleString
+                        .append(STYLE_PREFIX)
+                        .append(ChatFormatting.BOLD.toString().charAt(1));
             }
             if (strikethrough) {
-                styleString.append(STYLE_PREFIX).append(ChatFormatting.STRIKETHROUGH.toString().charAt(1));
+                styleString
+                        .append(STYLE_PREFIX)
+                        .append(ChatFormatting.STRIKETHROUGH.toString().charAt(1));
             }
             if (underlined) {
-                styleString.append(STYLE_PREFIX).append(ChatFormatting.UNDERLINE.toString().charAt(1));
+                styleString
+                        .append(STYLE_PREFIX)
+                        .append(ChatFormatting.UNDERLINE.toString().charAt(1));
             }
             if (italic) {
-                styleString.append(STYLE_PREFIX).append(ChatFormatting.ITALIC.toString().charAt(1));
+                styleString
+                        .append(STYLE_PREFIX)
+                        .append(ChatFormatting.ITALIC.toString().charAt(1));
             }
             if (type.includeFonts()) {
                 if (font != null) {

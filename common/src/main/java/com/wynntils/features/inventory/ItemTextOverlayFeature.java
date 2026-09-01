@@ -170,7 +170,8 @@ public class ItemTextOverlayFeature extends Feature {
         drawTextOverlay(e.getGuiGraphics(), e.getItemStack(), e.getX(), e.getY(), true);
     }
 
-    private void drawTextOverlay(GuiGraphicsExtractor guiGraphics, ItemStack itemStack, int slotX, int slotY, boolean hotbar) {
+    private void drawTextOverlay(
+            GuiGraphicsExtractor guiGraphics, ItemStack itemStack, int slotX, int slotY, boolean hotbar) {
         Optional<WynnItem> wynnItemOpt = Models.Item.getWynnItem(itemStack);
         if (wynnItemOpt.isEmpty()) return;
 

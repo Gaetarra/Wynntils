@@ -123,7 +123,12 @@ public class UnidentifiedItemIconFeature extends Feature {
     @FunctionalInterface
     private interface IconRenderer {
         void renderIcon(
-                GuiGraphicsExtractor guiGraphics, int x, int y, int z, GearType gearType, Optional<CustomColor> textColor);
+                GuiGraphicsExtractor guiGraphics,
+                int x,
+                int y,
+                int z,
+                GearType gearType,
+                Optional<CustomColor> textColor);
 
         static IconRenderer forSpriteSheet(Texture texture, int yOffset, int padding) {
             int paddedDims = 16 - padding - padding;

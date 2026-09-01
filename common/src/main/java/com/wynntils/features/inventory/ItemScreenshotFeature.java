@@ -4,13 +4,13 @@
  */
 package com.wynntils.features.inventory;
 
+import com.mojang.blaze3d.GpuFormat;
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.pipeline.TextureTarget;
 import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.systems.GpuDevice;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.textures.GpuTexture;
-import com.mojang.blaze3d.GpuFormat;
 import com.wynntils.core.WynntilsMod;
 import com.wynntils.core.components.Models;
 import com.wynntils.core.consumers.features.Feature;
@@ -46,12 +46,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.render.GuiRenderer;
-import net.minecraft.client.renderer.state.gui.GuiRenderState;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipPositioner;
-import net.minecraft.client.renderer.fog.FogRenderer;
+import net.minecraft.client.renderer.state.gui.GuiRenderState;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.ClickEvent;
@@ -157,11 +156,15 @@ public class ItemScreenshotFeature extends Feature {
      */
     private static CompletableFuture<NativeImage> screenshotTooltip(
             Screen screen, List<ClientTooltipComponent> tooltip, Identifier tooltipStyle, int width, int height) {
-        TextureTarget framebuffer = new TextureTarget("Wynntils Item Screenshot", width * 2, height * 2, true, GpuFormat.RGBA8_UNORM);
+        TextureTarget framebuffer =
+                new TextureTarget("Wynntils Item Screenshot", width * 2, height * 2, true, GpuFormat.RGBA8_UNORM);
         RenderSystem.getDevice()
                 .createCommandEncoder()
                 .clearColorAndDepthTextures(
-                        framebuffer.getColorTexture(), new Vector4f(0f, 0f, 0f, 0f), framebuffer.getDepthTexture(), 1.0);
+                        framebuffer.getColorTexture(),
+                        new Vector4f(0f, 0f, 0f, 0f),
+                        framebuffer.getDepthTexture(),
+                        1.0);
 
         ((MinecraftExtension) McUtils.mc()).setOverridenRenderTarget(framebuffer);
         RenderSystem.outputColorTextureOverride = framebuffer.getColorTextureView();
@@ -171,8 +174,7 @@ public class ItemScreenshotFeature extends Feature {
 
         GuiRenderState guiRenderState = new GuiRenderState();
 
-        GuiRenderer guiRenderer =
-                new GuiRenderer(guiRenderState, mc.gameRenderer.featureRenderDispatcher(), List.of());
+        GuiRenderer guiRenderer = new GuiRenderer(guiRenderState, mc.gameRenderer.featureRenderDispatcher(), List.of());
 
         GuiGraphicsExtractor guiGraphics = new GuiGraphicsExtractor(mc, guiRenderState, 0, 0);
 

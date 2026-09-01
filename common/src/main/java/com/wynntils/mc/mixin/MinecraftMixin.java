@@ -5,8 +5,6 @@
 package com.wynntils.mc.mixin;
 
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
-import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import com.mojang.blaze3d.pipeline.RenderTarget;
@@ -46,7 +44,10 @@ public abstract class MinecraftMixin implements MinecraftExtension {
         MixinHelper.post(event);
     }
 
-    @Inject(method = "setScreenAndShow(Lnet/minecraft/client/gui/screens/Screen;)V", at = @At("HEAD"), cancellable = true)
+    @Inject(
+            method = "setScreenAndShow(Lnet/minecraft/client/gui/screens/Screen;)V",
+            at = @At("HEAD"),
+            cancellable = true)
     private void setScreenPre(Screen screen, CallbackInfo ci, @Share("oldScreen") LocalRef<Screen> oldScreen) {
         oldScreen.set(((Minecraft) (Object) this).gui.screen());
 

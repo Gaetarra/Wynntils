@@ -163,7 +163,8 @@ public final class WynntilsStatisticsScreen extends WynntilsListScreen<Statistic
         }
     }
 
-    private void renderCountStatistics(GuiGraphicsExtractor guiGraphics, StatisticKind statisticKind, StatisticEntry entry) {
+    private void renderCountStatistics(
+            GuiGraphicsExtractor guiGraphics, StatisticKind statisticKind, StatisticEntry entry) {
         FontRenderer.getInstance()
                 .renderText(
                         guiGraphics,
@@ -178,7 +179,8 @@ public final class WynntilsStatisticsScreen extends WynntilsListScreen<Statistic
                         TextShadow.NONE);
     }
 
-    private void renderAdvancedStatistics(GuiGraphicsExtractor guiGraphics, StatisticKind statisticKind, StatisticEntry entry) {
+    private void renderAdvancedStatistics(
+            GuiGraphicsExtractor guiGraphics, StatisticKind statisticKind, StatisticEntry entry) {
         FontRenderer.getInstance()
                 .renderText(
                         guiGraphics,

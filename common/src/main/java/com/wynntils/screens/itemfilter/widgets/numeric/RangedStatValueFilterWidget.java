@@ -56,7 +56,8 @@ public class RangedStatValueFilterWidget extends RangedNumericFilterWidget<StatV
     }
 
     @Override
-    protected void extractWidgetRenderState(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
+    protected void extractWidgetRenderState(
+            GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
         super.extractWidgetRenderState(guiGraphics, mouseX, mouseY, partialTick);
 
         percentageCheckbox.extractRenderState(guiGraphics, mouseX, mouseY, partialTick);

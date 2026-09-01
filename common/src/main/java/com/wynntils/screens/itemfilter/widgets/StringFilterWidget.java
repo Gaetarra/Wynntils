@@ -77,7 +77,8 @@ public class StringFilterWidget extends GeneralFilterWidget {
     }
 
     @Override
-    protected void extractWidgetRenderState(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
+    protected void extractWidgetRenderState(
+            GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
         entryInput.extractRenderState(guiGraphics, mouseX, mouseY, partialTick);
         strictCheckbox.extractRenderState(guiGraphics, mouseX, mouseY, partialTick);
         removeButton.extractRenderState(guiGraphics, mouseX, mouseY, partialTick);

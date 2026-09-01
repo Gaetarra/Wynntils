@@ -1,5 +1,5 @@
 /*
- * Copyright © Wynntils 2022-2025.
+ * Copyright © Wynntils 2022-2026.
  * This file is released under LGPLv3. See LICENSE for full license details.
  */
 package com.wynntils.models.elements.type;
@@ -7,8 +7,8 @@ package com.wynntils.models.elements.type;
 import com.wynntils.utils.StringUtils;
 import com.wynntils.utils.colors.CustomColor;
 import java.util.Locale;
-import net.minecraft.network.chat.TextColor;
 import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
@@ -21,7 +21,13 @@ public enum Powder {
             ChatFormatting.YELLOW,
             ChatFormatting.GOLD,
             "Chain Lightning"),
-    WATER(Element.WATER, Items.DYE.lightBlue(), Items.DYE.cyan(), ChatFormatting.AQUA, ChatFormatting.DARK_AQUA, "Curse"),
+    WATER(
+            Element.WATER,
+            Items.DYE.lightBlue(),
+            Items.DYE.cyan(),
+            ChatFormatting.AQUA,
+            ChatFormatting.DARK_AQUA,
+            "Curse"),
     FIRE(Element.FIRE, Items.DYE.pink(), Items.DYE.red(), ChatFormatting.RED, ChatFormatting.DARK_RED, "Courage"),
     AIR(Element.AIR, Items.DYE.gray(), Items.DYE.lightGray(), ChatFormatting.WHITE, ChatFormatting.GRAY, "Wind Prison");
 
@@ -70,7 +76,8 @@ public enum Powder {
     }
 
     public CustomColor getColor() {
-        return CustomColor.fromInt(TextColor.fromLegacyFormat(this.lightColor).getValue()).withAlpha(255);
+        return CustomColor.fromInt(TextColor.fromLegacyFormat(this.lightColor).getValue())
+                .withAlpha(255);
     }
 
     public Item getLowTierItem() {

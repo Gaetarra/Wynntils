@@ -17,7 +17,8 @@ public abstract class RenderEvent extends Event {
     private final Window window;
     private final RenderElementType type;
 
-    protected RenderEvent(GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker, Window window, RenderElementType type) {
+    protected RenderEvent(
+            GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker, Window window, RenderElementType type) {
         this.guiGraphics = guiGraphics;
         this.deltaTracker = deltaTracker;
         this.window = window;
@@ -47,7 +48,8 @@ public abstract class RenderEvent extends Event {
     }
 
     public static class Post extends RenderEvent {
-        public Post(GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker, Window window, RenderElementType type) {
+        public Post(
+                GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker, Window window, RenderElementType type) {
             super(guiGraphics, deltaTracker, window, type);
         }
     }

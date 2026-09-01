@@ -1,5 +1,5 @@
 /*
- * Copyright © Wynntils 2021-2024.
+ * Copyright © Wynntils 2021-2026.
  * This file is released under LGPLv3. See LICENSE for full license details.
  */
 package com.wynntils.mc.event;
@@ -17,7 +17,8 @@ public class ContainerClickEvent extends Event implements ICancellableEvent {
     private final ContainerInput clickType;
     private final int mouseButton;
 
-    public ContainerClickEvent(AbstractContainerMenu containerMenu, int slotNum, ContainerInput clickType, int mouseButton) {
+    public ContainerClickEvent(
+            AbstractContainerMenu containerMenu, int slotNum, ContainerInput clickType, int mouseButton) {
         this.containerMenu = containerMenu;
         this.slotNum = slotNum;
         this.clickType = clickType;
