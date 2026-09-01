@@ -139,7 +139,7 @@ public final class WynntilsLootrunPathsScreen extends WynntilsListScreen<Lootrun
             return;
         }
 
-        super.renderTooltip(guiGraphics, mouseX, mouseY);
+        super.extractTooltip(guiGraphics, mouseX, mouseY);
     }
 
     @Override

@@ -16,6 +16,7 @@ import com.wynntils.utils.render.Texture;
 import com.wynntils.utils.render.type.HorizontalAlignment;
 import com.wynntils.utils.render.type.TextShadow;
 import com.wynntils.utils.render.type.VerticalAlignment;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
@@ -53,8 +54,9 @@ public class LoadoutMenuSkillPointWidget extends AbstractWidget implements IconR
                                 StyledText.fromString(String.valueOf(points)),
                                 this.x + 30,
                                 this.y + startY,
-                                CustomColor.fromInt(
-                                        Skill.values()[i].getColorCode().getColor()),
+                                CustomColor.fromInt(TextColor.fromLegacyFormat(
+                                                Skill.values()[i].getColorCode())
+                                        .getValue()),
                                 HorizontalAlignment.LEFT,
                                 VerticalAlignment.MIDDLE,
                                 TextShadow.NORMAL);

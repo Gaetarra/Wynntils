@@ -53,7 +53,7 @@ public enum GearTier {
     public static GearTier fromStyledText(StyledText text) {
         Optional<ChatFormatting> chatFormatting = Arrays.stream(ChatFormatting.values())
                 .filter(cf -> TextColor.fromLegacyFormat(cf) != null)
-                .filter(c -> c.getColor()
+                .filter(c -> TextColor.fromLegacyFormat(c).getValue()
                         == text.getFirstPart()
                                 .getPartStyle()
                                 .getStyle()
